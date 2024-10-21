@@ -10,7 +10,13 @@
       <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
-    
+    <script>
+      function confirmDelete(id) {
+    if (confirm("Bạn có chắc chắn muốn xóa  không?")) {
+        window.location.href = "?status=delete&&id=" + id;
+    }
+}
+    </script>
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->

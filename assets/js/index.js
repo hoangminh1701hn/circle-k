@@ -1,3 +1,4 @@
+
 function calculateTotal() {
     var luongTheoGio = parseFloat(document.getElementById('luongTheoGio').value) || 0;
     var soGioLam = parseFloat(document.getElementById('soGioLam').value) || 0;
@@ -11,14 +12,3 @@ function calculateTotal() {
 }
 
 
-function showTable() {
-    var taiKhoan = document.getElementById('taiKhoan').value;
-    var salaryTable = document.getElementById('salaryTable');
-
-    // Kiểm tra nếu đã chọn nhân viên (không phải tùy chọn mặc định)
-    if (taiKhoan !== "") {
-        salaryTable.style.display = "block";  // Hiển thị bảng
-    } else {
-        salaryTable.style.display = "none";  // Ẩn bảng nếu chưa chọn nhân viên
-    }
-}

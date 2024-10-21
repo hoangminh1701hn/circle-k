@@ -252,42 +252,44 @@ class  adminback
 
     function delete_admin($admin_id)
     {
-        $sel_query = "DELETE FROM `taikhoan` WHERE `id_acc`=$admin_id";
-        $query = mysqli_query($this->connection, $sel_query);
-        $fetch = mysqli_fetch_assoc($query);
-        $img_name = $fetch['hinhdaidien'];
+        $sel_query = "DELETE FROM `taikhoan` WHERE `id_tk`=$admin_id";
+        // $query = mysqli_query($this->connection, $sel_query);
+        // $fetch = mysqli_fetch_assoc($query);
+        // $img_name = $fetch['hinhdaidien'];
 
 
-        if (mysqli_query($this->connection, $query)) {
-            unlink('uploads/avatar/' . $img_name);
+        if (mysqli_query($this->connection, $sel_query)) {
+            // unlink('uploads/avatar/' . $img_name);
             echo '<script>
             alert("Xóa tài khoản thành công");
-            window.location.href = "manage_account.php";
+            window.location.href = "nhanvien_manage.php";
             </script>';
         }
     }
 
-    function add_luong($data)
-    {
-        $taiKhoan = $data['taiKhoan'];
+    function add_luong($data) {
+        $taiKhoan = $data['taiKhoan'];  // Check if this key exists in $_POST
         $luongTheoGio = $data['luongTheoGio'];
         $soGioLam = $data['soGioLam'];
         $phuCap = $data['phuCap'];
         $tienThuong = $data['tienThuong'];
         $tienPhat = $data['tienPhat'];
+        $thang=$data['thang'];
         $luongThucNhan = $data['luongThucNhan'];
-
-        $query = "INSERT INTO `luong`( `taiKhoan`, `luongTheoGio`, `soGioLam`, `phuCap`, `tienThuong`, `tienPhat`, `luongThucNhan`) VALUES ('$taiKhoan', '$luongTheoGio', '$soGioLam', '$phuCap', '$tienThuong', '$tienPhat', '$luongThucNhan')";
-
+    
+        $query = "INSERT INTO `luong` (`taiKhoan`, `luongTheoGio`, `soGioLam`, `phuCap`, `thuong`, `phat`,`thang`, `luongThucNhan`) 
+                  VALUES ('$taiKhoan', '$luongTheoGio', '$soGioLam', '$phuCap', '$tienThuong', '$tienPhat','$thang', '$luongThucNhan')";
+    
         if (mysqli_query($this->connection, $query)) {
             echo '<script>
-            alert("Thêm Lương thành công");
-            window.location.href = "luong_manage.php";
+                alert("Thêm Lương thành công");
+                window.location.href = "luong_add1.php";
             </script>';
         } else {
             return "Thêm Lương thất bại!";
         }
     }
+    
 
     function show_luong()
     {
@@ -298,52 +300,68 @@ class  adminback
             return $ctg_info;
         }
     }
-
-    function p_display_catagory()
-    {
-        $query = "SELECT * FROM `danhmuc` WHERE trangthai='hoatdong'";
-
-        if (mysqli_query($this->connection, $query)) {
-            $ctg_info = mysqli_query($this->connection, $query);
-            return $ctg_info;
+    public function tinhSoGioLamTheoThang($employee_id, $thang) {
+        $totalHours = 0;
+    
+        // Lấy năm và tháng từ biến $thang
+        $year = date('Y'); // Năm hiện tại
+        $month = str_pad($thang, 2, '0', STR_PAD_LEFT); // Đảm bảo tháng có 2 chữ số
+    
+        // Truy vấn dữ liệu từ MySQL với điều kiện lọc theo tháng
+        $sql = "SELECT * FROM `attendance` 
+                WHERE `employee_id` = '$employee_id' 
+                AND `status` LIKE 'Đã ra' 
+                AND MONTH(`time_in`) = '$month' 
+                AND YEAR(`time_in`) = '$year'";
+        
+        $result = mysqli_query($this->connection, $sql);
+    
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $timeIn = strtotime($row['time_in']);
+                $timeOut = strtotime($row['time_out']);
+    
+                // Kiểm tra nếu time_out không NULL
+                if ($timeOut !== false) {
+                    // Tính số giờ làm việc cho mỗi bản ghi
+                    $hours = ($timeOut - $timeIn) / 3600; // Tính số giờ
+                    $totalHours += $hours;
+                }
+            }
+        } else {
+            echo "<h3 style='color: red;'>Không tìm thấy bản ghi cho nhân viên trong tháng $thang!!</h3><br>";
         }
+    
+        return $totalHours;
     }
-
-    function catagory_published($id)
+    
+    
+    
+    
+    function delete_luong($id)
     {
-        $query = "UPDATE `danhmuc` SET `trangthai`= 'hoatdong' WHERE id_dm = $id";
-        mysqli_query($this->connection, $query);
-    }
-    function catagory_unpublished($id)
-    {
-        $query = "UPDATE `danhmuc` SET `trangthai`= 'khonghoatdong' WHERE id_dm = $id";
-        mysqli_query($this->connection, $query);
-    }
-
-    function delete_catagory($id)
-    {
-        $query = "DELETE FROM `danhmuc` WHERE  id_dm = $id";
+        $query = "DELETE FROM `luong` WHERE  id_luong = $id";
         if (mysqli_query($this->connection, $query)) {
             echo '<script>
             alert("Xóa thành công");
-            window.location.href = "manage_cata.php";
+            window.location.href = "luong_manage.php";
             </script>';
         }
     }
 
-    function display_cataByID($id)
+    function show_luong_byID($id)
     {
-        $query = "SELECT * FROM `danhmuc` WHERE id_dm = $id";
+        $query = "SELECT * FROM `luong` WHERE id_luong = $id";
 
         if (mysqli_query($this->connection, $query)) {
-            $cata_info = mysqli_query($this->connection, $query);
-            return mysqli_fetch_assoc($cata_info);
+            $luong_info = mysqli_query($this->connection, $query);
+            return mysqli_fetch_assoc($luong_info);
         }
     }
 
     function show_taikhoanbyid($id)
     {
-        $query = "SELECT * FROM `taikhoan` WHERE id_acc = $id";
+        $query = "SELECT * FROM `taikhoan` WHERE id_tk = $id";
 
         if (mysqli_query($this->connection, $query)) {
             $cata_info = mysqli_query($this->connection, $query);
@@ -351,18 +369,21 @@ class  adminback
         }
     }
 
-    function updata_catagory($data)
+    function update_luong($data)
     {
-        $u_ctg_id = $data['u_ctg_id'];
-        $u_ctg_name = $data['u_ctg_name'];
-        // $u_ctg_des = $data['u_ctg_des'];
-        $u_ctg_status = $data['u_ctg_status'];
+        $id_luong = $data['id_luong'];
+        $taiKhoan = $data['taiKhoan'];
+        $soGioLam = $data['soGioLam'];
+        $phuCap = $data['phuCap'];
+        $tienThuong = $data['tienThuong'];
+        $tienPhat = $data['tienPhat'];
+        $luongThucNhan = $data['luongThucNhan'];
 
-        $query = "UPDATE `danhmuc` SET `tendanhmuc`='$u_ctg_name',`trangthai`= '$u_ctg_status' WHERE id_dm =  $u_ctg_id";
+        $query = "UPDATE `luong` SET `taiKhoan`='$taiKhoan',`soGioLam`= '$soGioLam',`phuCap`= '$phuCap',`thuong`= '$tienThuong',`phat`= '$tienPhat',`luongThucNhan`= '$luongThucNhan' WHERE id_luong =  $id_luong";
         if (mysqli_query($this->connection, $query)) {
             echo '<script>
             alert(" Chỉnh sửa thành công");
-            window.location.href = "manage_cata.php";
+            window.location.href = "luong_manage.php";
             </script>';
         }
     }

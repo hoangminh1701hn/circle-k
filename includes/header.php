@@ -31,8 +31,8 @@
     <!-- partial:partials/_sidebar.html -->
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
       <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-        <a class="sidebar-brand brand-logo" href="index.php"><img src="assets/images/logo.png" alt="logo" /></a>
-        <a class="sidebar-brand brand-logo-mini" href="index.php"><img src="assets/images/logomini.png"
+        <a class="sidebar-brand brand-logo" href="dashboard.php"><img src="assets/images/logo.png" alt="logo" /></a>
+        <a class="sidebar-brand brand-logo-mini" href="dashboard.php"><img src="assets/images/logomini.png"
             alt="logo" /></a>
       </div>
       <ul class="nav">
@@ -156,7 +156,7 @@
           <div class="collapse" id="luong">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="luong_manage.php">Quản lý lương</a></li>
-              <li class="nav-item"> <a class="nav-link" href="luong_add.php"> Thêm lương </a></li>
+              <li class="nav-item"> <a class="nav-link" href="luong_add1.php"> Thêm lương </a></li>
               <li class="nav-item"> <a class="nav-link" href="#"> Quản lý tiền phạt </a></li>
               <li class="nav-item"> <a class="nav-link" href="#"> Quản lý tiên thưởng</a></li>
             

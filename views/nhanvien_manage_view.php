@@ -50,7 +50,7 @@ if(isset($_GET['status'])){
                             }
                             ?> </td>
                             <td>  
-                    <a href="edit_admin.php?status=userEdit&&id=<?php echo $user['id_tk'] ?>" class="btn btn-sm btn-warning">Sửa </a>
+                    <a href="nhanvien_edit.php?status=userEdit&&id=<?php echo $user['id_tk'] ?>" class="btn btn-sm btn-warning">Sửa </a>
                     <a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="confirmDelete(<?php echo $user['id_tk'] ?>)">Xóa</a>
 
                 </td>
@@ -65,3 +65,6 @@ if(isset($_GET['status'])){
                   </div>
                 </div>
               </div>
+
+
+              

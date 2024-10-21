@@ -2,7 +2,12 @@
     $showluong = $obj-> show_luong();
     $user_info = $obj->show_admin_user();
     $dem=1;
-
+    if(isset($_GET['status'])){
+        $id = $_GET['id'];
+        if($_GET['status']=='delete'){
+              $obj->delete_luong($id);
+        }
+    }
 
     $user_array = array();
 while ($user = mysqli_fetch_assoc($user_info)) {
@@ -55,6 +60,8 @@ while ($user = mysqli_fetch_assoc($user_info)) {
 
                             <td>
                                 <a href="#" class="badge badge-outline-success">Xác nhận</a>
+                                <a href="luong_edit.php?trangthai=edit&&id=<?php echo $luong['id_luong'] ?>" class="badge badge-outline-warning">Sửa </a>
+                                <a href="javascript:void(0);" class="badge badge-outline-danger" onclick="confirmDelete(<?php echo $luong['id_luong'] ?>)">Xóa</a>
                             </td>
                         </tr>
                         <?php 

@@ -52,8 +52,14 @@
                                             include ("views/luong_manage_view.php");
                                         }elseif($views=="dangkyfaceid" ){
                                             include ("views/dangkyfaceid_view.php");
-                                        }elseif($views=="luong_add" ){
-                                            include ("views/luong_add_view.php");
+                                        }elseif($views=="luong_add1" ){
+                                            include ("views/luong_add1_view.php");
+                                        }elseif($views=="luong_edit" ){
+                                            include ("views/luong_edit_view.php");
+                                        }elseif($views=="luong_add2" ){
+                                            include ("views/luong_add2_view.php");
+                                        }elseif($views=="nhanvien_edit" ){
+                                            include ("views/nhanvien_edit_view.php");
                                         }
                                         else{
                                             echo '<script>

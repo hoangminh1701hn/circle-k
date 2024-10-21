@@ -1,6 +1,6 @@
 
 <?php 
-    $views = "luong_add";
+    $views = "nhanvien_edit";
     include ("index.php");
 
 ?>
