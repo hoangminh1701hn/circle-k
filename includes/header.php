@@ -142,6 +142,7 @@
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item"><a class="nav-link" href="nghiphep_manage.php">Quản lý nghỉ phép</a></li>
                         <li class="nav-item"><a class="nav-link" href="nghiphep_history.php">Lịch sử nghỉ phép</a></li>
+                        <li class="nav-item"><a class="nav-link" href="nghiphep_add.php">Xin nghỉ phép</a></li>
                     </ul>
                 </div>
             </li>

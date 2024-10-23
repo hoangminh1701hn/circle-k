@@ -1,10 +1,4 @@
-<!-- <?php 
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-    header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Headers: *");
-    header("Access-Control-Allow-Methods: *")?> -->
-<!-- <?php 
+<?php
 
     include("class/adminback.php");
     $obj= new adminback();
@@ -22,7 +16,7 @@
             $obj->admin_logout();
         }
     }
-?> -->
+?> 
 
 <?php 
     include ("includes/header.php")
@@ -60,6 +54,8 @@
                                             include ("views/luong_add2_view.php");
                                         }elseif($views=="nhanvien_edit" ){
                                             include ("views/nhanvien_edit_view.php");
+                                        }elseif($views=="nghiphep_add" ){
+                                            include ("views/nghiphep_add_view.php");
                                         }
                                         else{
                                             echo '<script>

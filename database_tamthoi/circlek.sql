@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 16, 2024 lúc 06:00 PM
+-- Thời gian đã tạo: Th10 21, 2024 lúc 05:29 AM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 5.6.40
 
@@ -65,7 +65,10 @@ INSERT INTO `attendance` (`id`, `employee_id`, `name`, `status`, `time_in`, `tim
 (21, 1, NULL, 'Đã ra', '2024-10-11 22:28:13', '2024-10-11 22:29:46'),
 (22, 1, NULL, 'Đã vào', '2024-10-11 22:30:06', NULL),
 (23, 1, NULL, 'Đã vào', '2024-10-11 22:32:46', NULL),
-(24, 1, NULL, 'Đã vào', '2024-10-11 22:44:07', NULL);
+(24, 1, NULL, 'Đã vào', '2024-10-11 22:44:07', NULL),
+(25, 2, 'Minh', 'Đã ra', '2024-10-01 08:00:00', '2024-10-01 17:00:00'),
+(26, 2, 'Minh', 'Đã ra', '2024-10-02 08:00:00', '2024-10-02 17:00:00'),
+(27, 2, NULL, 'Đã ra', '2024-09-24 08:00:00', '2024-09-24 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -130,16 +133,21 @@ CREATE TABLE `luong` (
   `phuCap` int(255) NOT NULL,
   `thuong` int(255) NOT NULL,
   `phat` int(255) NOT NULL,
+  `thang` int(2) NOT NULL,
   `luongThucNhan` int(255) NOT NULL,
-  `ngayThanhToan` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `ngayThanhToan` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `luong`
 --
 
-INSERT INTO `luong` (`id_luong`, `taikhoan`, `luongTheoGio`, `soGioLam`, `phuCap`, `thuong`, `phat`, `luongThucNhan`, `ngayThanhToan`) VALUES
-(1, 1, 25, 32, 500, 200, 100, 1475, '2024-10-16 11:38:58');
+INSERT INTO `luong` (`id_luong`, `taikhoan`, `luongTheoGio`, `soGioLam`, `phuCap`, `thuong`, `phat`, `thang`, `luongThucNhan`, `ngayThanhToan`) VALUES
+(1, 2, 25, 32, 500, 200, 100, 10, 1475, '2024-10-21 03:04:04'),
+(2, 2, 1111111, 111111, 111111111, 11111111, 2147483647, 10, 2147483647, '2024-10-21 03:04:08'),
+(3, 2, 111, 123, 1, 1111, 111, 10, 13181, '2024-10-21 03:04:10'),
+(7, 2, 25, 18, 12, 12, 1, 10, 425, '2024-10-21 03:04:11'),
+(8, 4, 1, 0, 1, 1, 1, 10, 1, '2024-10-21 03:04:12');
 
 -- --------------------------------------------------------
 
@@ -165,9 +173,10 @@ CREATE TABLE `taikhoan` (
 --
 
 INSERT INTO `taikhoan` (`id_tk`, `hoTen`, `Sdt`, `diaChi`, `gioiTinh`, `email`, `matKhau`, `role`, `hinhDaiDien`, `ngayTao`) VALUES
+(1, '11111111', '1', '11', 'Nữ', 'm1inh@gmail.com', '6c14da109e294d1e8155be8aa4b1ce8e', 'NhanVien', '', '2024-10-16 18:01:48'),
 (2, 'Nguyễn Hoàng Minh', '0342579471', 'Vĩnh Long', 'Nam', 'minh@gmail.com', '202cb962ac59075b964b07152d234b70', 'CuaHangTruong', '', '2024-10-16 07:21:33'),
-(3, '1', '1', '1', 'Nữ', 't@gmail.com', 'e358efa489f58062f10dd7316b65649e', 'NhanVien', '', '2024-10-16 06:13:54'),
-(5, 'Nguyễn Hoàng Minh', '0342579471', 'Hồ Chí Minh', 'Nam', 'minh1@gmail.com', '1', 'CuaHangTruong', '', '2024-10-16 04:04:19');
+(3, '2222222', '22222', '222', 'Nữ', 'minh2@gmail.com', '202cb962ac59075b964b07152d234b70', 'NhanVien', '', '2024-10-21 02:06:42'),
+(4, 'Huỳnh Quốc Tiến', '02312365741', 'Vĩnh Long', 'Nam', 't@gmail.com', 'e358efa489f58062f10dd7316b65649e', 'CuaHangTruong', '', '2024-10-21 02:12:43');
 
 -- --------------------------------------------------------
 
@@ -261,7 +270,8 @@ INSERT INTO `working_regulations` (`id`, `start_time`, `end_time`, `shift_rules`
 -- Chỉ mục cho bảng `attendance`
 --
 ALTER TABLE `attendance`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `employee_id` (`employee_id`);
 
 --
 -- Chỉ mục cho bảng `attendance_history`
@@ -302,7 +312,7 @@ ALTER TABLE `working_regulations`
 -- AUTO_INCREMENT cho bảng `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT cho bảng `attendance_history`
@@ -314,13 +324,13 @@ ALTER TABLE `attendance_history`
 -- AUTO_INCREMENT cho bảng `luong`
 --
 ALTER TABLE `luong`
-  MODIFY `id_luong` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_luong` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `taikhoan`
 --
 ALTER TABLE `taikhoan`
-  MODIFY `id_tk` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_tk` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
