@@ -218,7 +218,16 @@
               <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                 <div class="navbar-profile">
                   <img class="img-xs rounded-circle" src="assets/images/faces/face15.jpg" alt="">
-                  <p class="mb-0 d-none d-sm-block navbar-profile-name">Quản lý cửa hàng</p>
+                  <p class="mb-0 d-none d-sm-block navbar-profile-name"><?php
+                          $user_info = $obj->show_admin_user();
+                          
+                                    while($user = mysqli_fetch_assoc($user_info)){ 
+                                        if($admin_id==$user['id_tk']){
+                                            echo $user['hoTen'];
+                                        }
+                                        }
+                                   ?>
+                    </p>
                   <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                 </div>
               </a>

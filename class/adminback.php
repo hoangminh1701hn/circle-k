@@ -373,14 +373,15 @@ class  adminback
     function update_luong($data)
     {
         $id_luong = $data['id_luong'];
-        $taiKhoan = $data['taiKhoan'];
+        $luongTheoGio = $data['luongTheoGio'];
+        
         $soGioLam = $data['soGioLam'];
         $phuCap = $data['phuCap'];
         $tienThuong = $data['tienThuong'];
         $tienPhat = $data['tienPhat'];
         $luongThucNhan = $data['luongThucNhan'];
 
-        $query = "UPDATE `luong` SET `taiKhoan`='$taiKhoan',`soGioLam`= '$soGioLam',`phuCap`= '$phuCap',`thuong`= '$tienThuong',`phat`= '$tienPhat',`luongThucNhan`= '$luongThucNhan' WHERE id_luong =  $id_luong";
+        $query = "UPDATE `luong` SET `luongTheoGio`= '$luongTheoGio', `soGioLam`= '$soGioLam',`phuCap`= '$phuCap',`thuong`= '$tienThuong',`phat`= '$tienPhat',`luongThucNhan`= '$luongThucNhan' WHERE id_luong =  $id_luong";
         if (mysqli_query($this->connection, $query)) {
             echo '<script>
             alert(" Chỉnh sửa thành công");
@@ -388,7 +389,17 @@ class  adminback
             </script>';
         }
     }
-
+    function xacnhan_luong($id_luong)
+    {
+        $ngayThanhToan =  date('Y-m-d H:i:s');
+        $query = "UPDATE `luong` SET `ngayThanhToan` = '$ngayThanhToan' WHERE `id_luong` = '$id_luong'";
+        if (mysqli_query($this->connection, $query)) {
+            echo '<script>
+            alert("Cập nhật thành công");
+            window.location.href = "luong_manage.php";
+            </script>';
+        }
+    }
     function thayDoiChu($str)
     {
         // Mảng ánh xạ các ký tự có dấu thành không dấu

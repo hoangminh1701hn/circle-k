@@ -2,7 +2,7 @@
 
     include("class/adminback.php");
     $obj= new adminback();
-
+    date_default_timezone_set('Asia/Ho_Chi_Minh'); 
     session_start();
     $admin_id = $_SESSION['admin_id'];
     $admin_email = $_SESSION['admin_email'];

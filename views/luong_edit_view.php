@@ -46,7 +46,7 @@ if(isset($_POST['update_luong'])){
             </thead>
             <tbody>
                 <tr>
-                    
+                    <input type="hidden" name="id_luong" value="<?php echo $luong['id_luong']; ?>">
                     <input type="hidden" id="employeeId" name="taiKhoan" class="form-control" value="<?php echo $employee_id; ?>">
                     <input type="hidden" id="thang" name="thang" class="form-control" value="<?php echo $thang; ?>">
 
@@ -60,29 +60,13 @@ if(isset($_POST['update_luong'])){
             </tbody>
         </table>
         <br>
-        <button type="submit" class="btn btn-primary mr-2" name="add_luong">Xác nhận</button>
+        <button type="submit" class="btn btn-primary mr-2" name="update_luong">Xác nhận</button>
         <button type="reset" class="btn btn-light">Hủy</button>
         
 
     </form>
 </div>
 
-<script>
-function calculateTotal() {
-    var luongTheoGio = parseFloat(document.getElementById('luongTheoGio').value) || 0;
-    var soGioLam = parseFloat(document.getElementById('soGioLam').value) || 0;
-    var phuCap = parseFloat(document.getElementById('phuCap').value) || 0;
-    var tienThuong = parseFloat(document.getElementById('tienThuong').value) || 0;
-    var tienPhat = parseFloat(document.getElementById('tienPhat').value) || 0;
-
-    // Tính tổng cộng
-    var tongcong = ((luongTheoGio * soGioLam) + phuCap + tienThuong - tienPhat);
-    // Trừ 10.05% thuế hoặc khấu trừ khác
-    var luongThucNhan = tongcong - (tongcong * (10.05 / 100));
-    // Cập nhật giá trị vào ô lương thực nhận
-    document.getElementById('luongThucNhan').value = luongThucNhan.toFixed(2);
-}
-</script>
 
 
 

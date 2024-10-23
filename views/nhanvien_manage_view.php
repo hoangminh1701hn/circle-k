@@ -56,8 +56,9 @@ if(isset($_GET['status'])){
                 </td>
                           </tr>
                 <?php
+                 $dem++;
             }
-            $dem++;
+           
                 ?>
                         </tbody>
                       </table>
