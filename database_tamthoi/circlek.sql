@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 21, 2024 lúc 05:29 AM
+-- Thời gian đã tạo: Th10 23, 2024 lúc 07:57 PM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 5.6.40
 
@@ -144,10 +144,39 @@ CREATE TABLE `luong` (
 
 INSERT INTO `luong` (`id_luong`, `taikhoan`, `luongTheoGio`, `soGioLam`, `phuCap`, `thuong`, `phat`, `thang`, `luongThucNhan`, `ngayThanhToan`) VALUES
 (1, 2, 25, 32, 500, 200, 100, 10, 1475, '2024-10-21 03:04:04'),
-(2, 2, 1111111, 111111, 111111111, 11111111, 2147483647, 10, 2147483647, '2024-10-21 03:04:08'),
 (3, 2, 111, 123, 1, 1111, 111, 10, 13181, '2024-10-21 03:04:10'),
 (7, 2, 25, 18, 12, 12, 1, 10, 425, '2024-10-21 03:04:11'),
-(8, 4, 1, 0, 1, 1, 1, 10, 1, '2024-10-21 03:04:12');
+(9, 2, 26, 18, 300, 100, 200, 10, 601, '2024-10-23 17:42:54');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `nghiphep`
+--
+
+CREATE TABLE `nghiphep` (
+  `id_np` int(10) UNSIGNED NOT NULL,
+  `nhanVien` int(10) NOT NULL,
+  `lyDo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tuNgay` date NOT NULL,
+  `denNgay` date NOT NULL,
+  `ngayXinPhep` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `trangThai` enum('DangXuLy','Duyet','TuChoi','') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'DangXuLy'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `nghiphep`
+--
+
+INSERT INTO `nghiphep` (`id_np`, `nhanVien`, `lyDo`, `tuNgay`, `denNgay`, `ngayXinPhep`, `trangThai`) VALUES
+(1, 2, 'Bị Bệnh', '2024-10-16', '2024-10-17', '2024-10-13 00:00:00', 'Duyet'),
+(2, 1, 'Đi du lịch', '2024-10-15', '2024-10-17', '2024-10-19 13:00:00', 'TuChoi'),
+(3, 1, 'Đám tang', '2024-10-28', '2024-10-30', '2024-10-23 11:38:26', 'TuChoi'),
+(13, 2, 'Thử', '2024-10-24', '2024-10-25', '2024-10-23 15:53:50', 'Duyet'),
+(14, 3, 'Xe Hư', '2024-10-16', '2024-10-16', '2024-10-24 00:27:06', 'DangXuLy'),
+(15, 4, 'Người thân bệnh ', '2024-10-26', '2024-10-27', '2024-10-24 00:27:32', 'DangXuLy'),
+(16, 5, 'Ốm', '2024-10-25', '2024-10-25', '2024-10-24 00:30:54', 'DangXuLy'),
+(17, 6, 'Đám cưới bản thân', '2024-10-26', '2024-10-27', '2024-10-24 00:31:24', 'DangXuLy');
 
 -- --------------------------------------------------------
 
@@ -173,10 +202,12 @@ CREATE TABLE `taikhoan` (
 --
 
 INSERT INTO `taikhoan` (`id_tk`, `hoTen`, `Sdt`, `diaChi`, `gioiTinh`, `email`, `matKhau`, `role`, `hinhDaiDien`, `ngayTao`) VALUES
-(1, '11111111', '1', '11', 'Nữ', 'm1inh@gmail.com', '6c14da109e294d1e8155be8aa4b1ce8e', 'NhanVien', '', '2024-10-16 18:01:48'),
+(1, 'Lương Trung Nguyên', '1', '11', 'Nữ', 'm1inh@gmail.com', '6c14da109e294d1e8155be8aa4b1ce8e', 'CuaHangTruong', '', '2024-10-16 18:01:48'),
 (2, 'Nguyễn Hoàng Minh', '0342579471', 'Vĩnh Long', 'Nam', 'minh@gmail.com', '202cb962ac59075b964b07152d234b70', 'CuaHangTruong', '', '2024-10-16 07:21:33'),
-(3, '2222222', '22222', '222', 'Nữ', 'minh2@gmail.com', '202cb962ac59075b964b07152d234b70', 'NhanVien', '', '2024-10-21 02:06:42'),
-(4, 'Huỳnh Quốc Tiến', '02312365741', 'Vĩnh Long', 'Nam', 't@gmail.com', 'e358efa489f58062f10dd7316b65649e', 'CuaHangTruong', '', '2024-10-21 02:12:43');
+(3, 'Trần Hữu Minh', '222223', '2223', 'Nam', 'minh21@gmail.com', '202cb962ac59075b964b07152d234b70', 'NhanVien', '', '2024-10-21 02:06:42'),
+(4, 'Huỳnh Quốc Tiến', '02312365741', 'Vĩnh Long', 'Nam', 't@gmail.com', 'e358efa489f58062f10dd7316b65649e', 'NhanVien', '', '2024-10-21 02:12:43'),
+(5, 'Trần Văn A', '085467123', 'Phú Nhuận', 'Nam', 'A@gmail.com', '202cb962ac59075b964b07152d234b70', 'NhanVien', '', '2024-10-23 17:29:09'),
+(6, 'Nguyễn Thị B', '076458813', 'Phú Yên', 'Nữ', 'B@gmail.com', '202cb962ac59075b964b07152d234b70', 'NhanVien', '', '2024-10-23 17:30:14');
 
 -- --------------------------------------------------------
 
@@ -287,6 +318,12 @@ ALTER TABLE `luong`
   ADD KEY `taikhoan` (`taikhoan`);
 
 --
+-- Chỉ mục cho bảng `nghiphep`
+--
+ALTER TABLE `nghiphep`
+  ADD PRIMARY KEY (`id_np`);
+
+--
 -- Chỉ mục cho bảng `taikhoan`
 --
 ALTER TABLE `taikhoan`
@@ -324,13 +361,19 @@ ALTER TABLE `attendance_history`
 -- AUTO_INCREMENT cho bảng `luong`
 --
 ALTER TABLE `luong`
-  MODIFY `id_luong` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_luong` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT cho bảng `nghiphep`
+--
+ALTER TABLE `nghiphep`
+  MODIFY `id_np` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT cho bảng `taikhoan`
 --
 ALTER TABLE `taikhoan`
-  MODIFY `id_tk` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_tk` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
