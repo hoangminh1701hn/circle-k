@@ -56,6 +56,30 @@
                                             include ("views/nhanvien_edit_view.php");
                                         }elseif($views=="nghiphep_add" ){
                                             include ("views/nghiphep_add_view.php");
+                                        }elseif($views=="thuong_manage" ){
+                                            include ("views/thuong_manage_view.php");
+                                        }elseif($views=="thuong_add" ){
+                                            include ("views/thuong_add_view.php");
+                                        }elseif($views=="thuong_edit" ){
+                                            include ("views/thuong_edit_view.php");
+                                        }elseif($views=="phat_manage" ){
+                                            include ("views/phat_manage_view.php");
+                                        }elseif($views=="phat_add" ){
+                                            include ("views/phat_add_view.php");
+                                        }elseif($views=="phat_edit" ){
+                                            include ("views/phat_edit_view.php");
+                                        }elseif($views=="loaiphat_manage" ){
+                                            include ("views/loaiphat_manage_view.php");
+                                        }elseif($views=="loaiphat_add" ){
+                                            include ("views/loaiphat_add_view.php");
+                                        }elseif($views=="loaiphat_edit" ){
+                                            include ("views/loaiphat_edit_view.php");
+                                        }elseif($views=="loaithuong_manage" ){
+                                            include ("views/loaithuong_manage_view.php");
+                                        }elseif($views=="loaithuong_add" ){
+                                            include ("views/loaithuong_add_view.php");
+                                        }elseif($views=="loaithuong_edit" ){
+                                            include ("views/loaithuong_edit_view.php");
                                         }
                                         else{
                                             echo '<script>

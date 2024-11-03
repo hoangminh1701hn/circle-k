@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 23, 2024 lúc 07:57 PM
+-- Thời gian đã tạo: Th10 03, 2024 lúc 11:04 PM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 5.6.40
 
@@ -122,6 +122,52 @@ INSERT INTO `attendance_history` (`id`, `employee_id`, `name`, `time_in`, `time_
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `danhsachphat`
+--
+
+CREATE TABLE `danhsachphat` (
+  `id_dsp` int(11) UNSIGNED NOT NULL,
+  `nhanVien` int(11) NOT NULL,
+  `phat` int(11) NOT NULL,
+  `soLanPhat` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `danhsachphat`
+--
+
+INSERT INTO `danhsachphat` (`id_dsp`, `nhanVien`, `phat`, `soLanPhat`) VALUES
+(1, 1, 1, 3),
+(2, 2, 2, 4),
+(4, 4, 2, 12),
+(5, 2, 1, 1),
+(6, 4, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `danhsachthuong`
+--
+
+CREATE TABLE `danhsachthuong` (
+  `id_dst` int(11) UNSIGNED NOT NULL,
+  `nhanVien` int(11) NOT NULL,
+  `thuong` int(11) NOT NULL,
+  `soLanThuong` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `danhsachthuong`
+--
+
+INSERT INTO `danhsachthuong` (`id_dst`, `nhanVien`, `thuong`, `soLanThuong`) VALUES
+(1, 1, 1, 2),
+(2, 2, 2, 3),
+(4, 4, 2, 3);
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `luong`
 --
 
@@ -145,8 +191,7 @@ CREATE TABLE `luong` (
 INSERT INTO `luong` (`id_luong`, `taikhoan`, `luongTheoGio`, `soGioLam`, `phuCap`, `thuong`, `phat`, `thang`, `luongThucNhan`, `ngayThanhToan`) VALUES
 (1, 2, 25, 32, 500, 200, 100, 10, 1475, '2024-10-21 03:04:04'),
 (3, 2, 111, 123, 1, 1111, 111, 10, 13181, '2024-10-21 03:04:10'),
-(7, 2, 25, 18, 12, 12, 1, 10, 425, '2024-10-21 03:04:11'),
-(9, 2, 26, 18, 300, 100, 200, 10, 601, '2024-10-23 17:42:54');
+(11, 2, 22000, 18, 500, 900, 400, 10, 1304, '2024-11-03 21:09:17');
 
 -- --------------------------------------------------------
 
@@ -158,6 +203,7 @@ CREATE TABLE `nghiphep` (
   `id_np` int(10) UNSIGNED NOT NULL,
   `nhanVien` int(10) NOT NULL,
   `lyDo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hinhanh` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tuNgay` date NOT NULL,
   `denNgay` date NOT NULL,
   `ngayXinPhep` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -168,15 +214,36 @@ CREATE TABLE `nghiphep` (
 -- Đang đổ dữ liệu cho bảng `nghiphep`
 --
 
-INSERT INTO `nghiphep` (`id_np`, `nhanVien`, `lyDo`, `tuNgay`, `denNgay`, `ngayXinPhep`, `trangThai`) VALUES
-(1, 2, 'Bị Bệnh', '2024-10-16', '2024-10-17', '2024-10-13 00:00:00', 'Duyet'),
-(2, 1, 'Đi du lịch', '2024-10-15', '2024-10-17', '2024-10-19 13:00:00', 'TuChoi'),
-(3, 1, 'Đám tang', '2024-10-28', '2024-10-30', '2024-10-23 11:38:26', 'TuChoi'),
-(13, 2, 'Thử', '2024-10-24', '2024-10-25', '2024-10-23 15:53:50', 'Duyet'),
-(14, 3, 'Xe Hư', '2024-10-16', '2024-10-16', '2024-10-24 00:27:06', 'DangXuLy'),
-(15, 4, 'Người thân bệnh ', '2024-10-26', '2024-10-27', '2024-10-24 00:27:32', 'DangXuLy'),
-(16, 5, 'Ốm', '2024-10-25', '2024-10-25', '2024-10-24 00:30:54', 'DangXuLy'),
-(17, 6, 'Đám cưới bản thân', '2024-10-26', '2024-10-27', '2024-10-24 00:31:24', 'DangXuLy');
+INSERT INTO `nghiphep` (`id_np`, `nhanVien`, `lyDo`, `hinhanh`, `tuNgay`, `denNgay`, `ngayXinPhep`, `trangThai`) VALUES
+(15, 4, 'Người thân bệnh ', '', '2024-10-26', '2024-10-27', '2024-10-24 00:27:32', 'DangXuLy'),
+(16, 5, 'Ốm', '', '2024-10-25', '2024-10-25', '2024-10-24 00:30:54', 'DangXuLy'),
+(17, 6, 'Đám cưới bản thân', '', '2024-10-26', '2024-10-27', '2024-10-24 00:31:24', 'TuChoi'),
+(18, 2, 'Ốm', '', '2024-10-25', '2024-10-25', '2024-10-24 08:44:45', 'Duyet'),
+(22, 2, 'Xe hư', 'uploads/nghiphep/xx.jpg', '2024-11-05', '2024-11-06', '2024-11-04 04:34:56', 'DangXuLy'),
+(23, 2, 'Ốm', 'uploads/nghiphep/pngtree-sick-hand-drawn-cartoon-elements-png-image_3540579.jpg', '2024-11-05', '2024-11-05', '2024-11-04 04:35:23', 'DangXuLy'),
+(24, 2, 'Ốm', 'uploads/nghiphep/pngtree-sick-hand-drawn-cartoon-elements-png-image_3540579.jpg', '2024-11-03', '2024-11-03', '2024-11-04 04:38:28', 'DangXuLy'),
+(25, 2, '11', 'uploads/nghiphep/pngtree-sick-hand-drawn-cartoon-elements-png-image_3540579.jpg', '2024-11-03', '2024-11-03', '2024-11-04 04:40:23', 'DangXuLy'),
+(26, 2, '111', 'uploads/nghiphep/pngtree-sick-hand-drawn-cartoon-elements-png-image_3540579.jpg', '2024-11-03', '2024-11-03', '2024-11-04 04:41:16', 'DangXuLy');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `phat`
+--
+
+CREATE TABLE `phat` (
+  `id_phat` int(11) UNSIGNED NOT NULL,
+  `loaiPhat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `soTienPhat` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `phat`
+--
+
+INSERT INTO `phat` (`id_phat`, `loaiPhat`, `soTienPhat`) VALUES
+(1, 'Đi trễ', 50),
+(2, 'Vắng không phép', 100);
 
 -- --------------------------------------------------------
 
@@ -202,12 +269,34 @@ CREATE TABLE `taikhoan` (
 --
 
 INSERT INTO `taikhoan` (`id_tk`, `hoTen`, `Sdt`, `diaChi`, `gioiTinh`, `email`, `matKhau`, `role`, `hinhDaiDien`, `ngayTao`) VALUES
-(1, 'Lương Trung Nguyên', '1', '11', 'Nữ', 'm1inh@gmail.com', '6c14da109e294d1e8155be8aa4b1ce8e', 'CuaHangTruong', '', '2024-10-16 18:01:48'),
-(2, 'Nguyễn Hoàng Minh', '0342579471', 'Vĩnh Long', 'Nam', 'minh@gmail.com', '202cb962ac59075b964b07152d234b70', 'CuaHangTruong', '', '2024-10-16 07:21:33'),
-(3, 'Trần Hữu Minh', '222223', '2223', 'Nam', 'minh21@gmail.com', '202cb962ac59075b964b07152d234b70', 'NhanVien', '', '2024-10-21 02:06:42'),
-(4, 'Huỳnh Quốc Tiến', '02312365741', 'Vĩnh Long', 'Nam', 't@gmail.com', 'e358efa489f58062f10dd7316b65649e', 'NhanVien', '', '2024-10-21 02:12:43'),
-(5, 'Trần Văn A', '085467123', 'Phú Nhuận', 'Nam', 'A@gmail.com', '202cb962ac59075b964b07152d234b70', 'NhanVien', '', '2024-10-23 17:29:09'),
-(6, 'Nguyễn Thị B', '076458813', 'Phú Yên', 'Nữ', 'B@gmail.com', '202cb962ac59075b964b07152d234b70', 'NhanVien', '', '2024-10-23 17:30:14');
+(1, 'Lương Trung Nguyên', '1', '11', 'Nữ', 'm1inh@gmail.com', '6c14da109e294d1e8155be8aa4b1ce8e', 'CuaHangTruong', 'anh-chan-dung-nam.jpeg', '2024-10-16 18:01:48'),
+(2, 'Nguyễn Hoàng Minh', '0342579471', 'Vĩnh Long', 'Nam', 'minh@gmail.com', '202cb962ac59075b964b07152d234b70', 'CuaHangTruong', '53f46a097f18de468709.jpg', '2024-10-16 07:21:33'),
+(4, 'Huỳnh Quốc Tiến', '02312365741', 'Vĩnh Long', 'Nam', 't@gmail.com', 'e358efa489f58062f10dd7316b65649e', 'NhanVien', 'hinh-anh-chan-dung-nam-lanh-lung.jpg', '2024-10-21 02:12:43'),
+(5, 'Trần Văn A', '085467123', 'Phú Nhuận', 'Nam', 'A@gmail.com', '202cb962ac59075b964b07152d234b70', 'NhanVien', 'c78845c451d18f8fd6c0.jpg', '2024-10-23 17:29:09'),
+(6, 'Nguyễn Thị B', '076458813', 'Phú Yên', 'Nữ', 'B@gmail.com', '202cb962ac59075b964b07152d234b70', 'NhanVien', 'inmg.jpg', '2024-10-23 17:30:14'),
+(7, 'Trần Văn C', '111111', '1111', 'Nữ', 'C@gmail.com', '202cb962ac59075b964b07152d234b70', 'NhanVien', 'pngtree-sick-hand-drawn-cartoon-elements-png-image_3540579.jpg', '2024-11-03 21:51:53');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `thuong`
+--
+
+CREATE TABLE `thuong` (
+  `id_thuong` int(11) UNSIGNED NOT NULL,
+  `loaiThuong` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `soTienThuong` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `thuong`
+--
+
+INSERT INTO `thuong` (`id_thuong`, `loaiThuong`, `soTienThuong`) VALUES
+(1, 'Lễ Tết', 500),
+(2, 'Đi làm đầy đủ', 300),
+(3, 'Tăng Ca', 300),
+(5, 'Đi sớm', 10);
 
 -- --------------------------------------------------------
 
@@ -311,6 +400,22 @@ ALTER TABLE `attendance_history`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `danhsachphat`
+--
+ALTER TABLE `danhsachphat`
+  ADD PRIMARY KEY (`id_dsp`),
+  ADD KEY `nhanVien` (`nhanVien`),
+  ADD KEY `Phat` (`phat`);
+
+--
+-- Chỉ mục cho bảng `danhsachthuong`
+--
+ALTER TABLE `danhsachthuong`
+  ADD PRIMARY KEY (`id_dst`),
+  ADD KEY `nhanVien` (`nhanVien`),
+  ADD KEY `thuong` (`thuong`);
+
+--
 -- Chỉ mục cho bảng `luong`
 --
 ALTER TABLE `luong`
@@ -324,10 +429,22 @@ ALTER TABLE `nghiphep`
   ADD PRIMARY KEY (`id_np`);
 
 --
+-- Chỉ mục cho bảng `phat`
+--
+ALTER TABLE `phat`
+  ADD PRIMARY KEY (`id_phat`);
+
+--
 -- Chỉ mục cho bảng `taikhoan`
 --
 ALTER TABLE `taikhoan`
   ADD PRIMARY KEY (`id_tk`);
+
+--
+-- Chỉ mục cho bảng `thuong`
+--
+ALTER TABLE `thuong`
+  ADD PRIMARY KEY (`id_thuong`);
 
 --
 -- Chỉ mục cho bảng `users`
@@ -358,22 +475,46 @@ ALTER TABLE `attendance_history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
+-- AUTO_INCREMENT cho bảng `danhsachphat`
+--
+ALTER TABLE `danhsachphat`
+  MODIFY `id_dsp` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT cho bảng `danhsachthuong`
+--
+ALTER TABLE `danhsachthuong`
+  MODIFY `id_dst` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT cho bảng `luong`
 --
 ALTER TABLE `luong`
-  MODIFY `id_luong` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_luong` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `nghiphep`
 --
 ALTER TABLE `nghiphep`
-  MODIFY `id_np` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_np` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT cho bảng `phat`
+--
+ALTER TABLE `phat`
+  MODIFY `id_phat` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `taikhoan`
 --
 ALTER TABLE `taikhoan`
-  MODIFY `id_tk` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_tk` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT cho bảng `thuong`
+--
+ALTER TABLE `thuong`
+  MODIFY `id_thuong` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `users`

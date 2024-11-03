@@ -19,6 +19,11 @@
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <!-- endinject -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
   <!-- Layout styles -->
   <link rel="stylesheet" href="assets/css/style.css">
   <!-- End layout styles -->
@@ -129,25 +134,25 @@
           </div>
         </li>
 
-        
-            <li class="nav-item menu-items">
-                <a class="nav-link" data-toggle="collapse" href="#nghiphep" aria-expanded="false" aria-controls="nghiphep">
-                    <span class="menu-icon">
-                        <i class="mdi mdi-debug-step-over"></i>
-                    </span>
-                    <span class="menu-title">Nghỉ phép</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="nghiphep">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"><a class="nav-link" href="nghiphep_manage.php">Quản lý nghỉ phép</a></li>
-                        <li class="nav-item"><a class="nav-link" href="nghiphep_history.php">Lịch sử nghỉ phép</a></li>
-                        <li class="nav-item"><a class="nav-link" href="nghiphep_add.php">Xin nghỉ phép</a></li>
-                    </ul>
-                </div>
-            </li>
+
         <li class="nav-item menu-items">
-          <a class="nav-link" data-toggle="collapse" href="#luong" aria-expanded="false" aria-controls="auth">
+          <a class="nav-link" data-toggle="collapse" href="#nghiphep" aria-expanded="false" aria-controls="nghiphep">
+            <span class="menu-icon">
+              <i class="mdi mdi-debug-step-over"></i>
+            </span>
+            <span class="menu-title">Nghỉ phép</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="nghiphep">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"><a class="nav-link" href="nghiphep_manage.php">Quản lý nghỉ phép</a></li>
+              <li class="nav-item"><a class="nav-link" href="nghiphep_history.php">Lịch sử nghỉ phép</a></li>
+              <li class="nav-item"><a class="nav-link" href="nghiphep_add.php">Xin nghỉ phép</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" data-toggle="collapse" href="#luong" aria-expanded="false" aria-controls="luong">
             <span class="menu-icon">
               <i class="mdi mdi-currency-usd"></i>
             </span>
@@ -158,13 +163,49 @@
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="luong_manage.php">Quản lý lương</a></li>
               <li class="nav-item"> <a class="nav-link" href="luong_add1.php"> Thêm lương </a></li>
-              <li class="nav-item"> <a class="nav-link" href="#"> Quản lý tiền phạt </a></li>
-              <li class="nav-item"> <a class="nav-link" href="#"> Quản lý tiên thưởng</a></li>
-            
             </ul>
           </div>
         </li>
-       
+
+        <li class="nav-item menu-items">
+          <a class="nav-link" data-toggle="collapse" href="#dsThuongPhat" aria-expanded="false"
+            aria-controls="dsThuongPhat">
+            <span class="menu-icon">
+              <i class="mdi mdi-debug-step-over"></i>
+            </span>
+            <span class="menu-title">DS thưởng, phạt</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="dsThuongPhat">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"><a class="nav-link" href="thuong_manage.php">Quản lý DS thưởng</a></li>
+              <li class="nav-item"><a class="nav-link" href="thuong_add.php">Thêm DS thưởng</a></li>
+              <li class="nav-item"><a class="nav-link" href="phat_manage.php">Quản lý DS phạt</a></li>
+              <li class="nav-item"><a class="nav-link" href="phat_add.php">Thêm DS phạt</a></li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item menu-items">
+          <a class="nav-link" data-toggle="collapse" href="#loaithuongphat" aria-expanded="false"
+            aria-controls="loaithuongphat">
+            <span class="menu-icon">
+              <i class="mdi mdi-book-multiple"></i>
+            </span>
+            <span class="menu-title">Loại thưởng, phạt</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="loaithuongphat">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"><a class="nav-link" href="loaithuong_manage.php">Quản lý loại tiền thưởng</a></li>
+              <li class="nav-item"><a class="nav-link" href="loaithuong_add.php">Thêm loại tiền thưởng</a></li>
+              <li class="nav-item"><a class="nav-link" href="loaiphat_manage.php">Quản lý loại tiền phạt</a></li>
+              <li class="nav-item"><a class="nav-link" href="loaiphat_add.php">Thêm loại tiền phạt</a></li>
+            </ul>
+          </div>
+        </li>
+
+
       </ul>
     </nav>
     <div class="container-fluid page-body-wrapper">
@@ -215,19 +256,24 @@
               </div>
             </li>
             <li class="nav-item dropdown">
+              <?php
+              $user_info = $obj->show_admin_user();
+
+              while ($user = mysqli_fetch_assoc($user_info)) {
+                if ($admin_id == $user['id_tk']) { ?>
               <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                 <div class="navbar-profile">
-                  <img class="img-xs rounded-circle" src="assets/images/faces/face15.jpg" alt="">
-                  <p class="mb-0 d-none d-sm-block navbar-profile-name"><?php
-                          $user_info = $obj->show_admin_user();
-                          
-                                    while($user = mysqli_fetch_assoc($user_info)){ 
-                                        if($admin_id==$user['id_tk']){
-                                            echo $user['hoTen'];
-                                        }
-                                        }
-                                   ?>
-                    </p>
+
+                <img src="<?php echo 'uploads/avatar/' . basename($user['hinhDaiDien']); ?>"
+                                            alt="Hình ảnh Đại diện" style="width: 50px; height: auto;" class="img-xs rounded-circle">
+                  <p class="mb-0 d-none d-sm-block navbar-profile-name">
+                    <?php
+                  
+                      echo $user['hoTen'];
+                    }
+                  }
+                  ?>
+                  </p>
                   <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                 </div>
               </a>

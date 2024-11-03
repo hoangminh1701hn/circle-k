@@ -7,7 +7,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['buoc1'])) {
         $employee_id = $_POST['taiKhoan'];
         $thang = $_POST['thang'];
 
-
+        $thuong = $obj->tongtien_thuong($employee_id);
+        $phat = $obj->tongtien_phat($employee_id);
         $soGiolam = $obj->tinhSoGioLamTheoThang($employee_id, $thang);
     }
 }
@@ -89,9 +90,9 @@ while ($user = mysqli_fetch_assoc($user_info)) {
                     </td>
 
                     <td><input type="number" id="tienThuong" name="tienThuong" class="form-control"
-                            oninput="calculateTotal()" required></td>
+                            oninput="calculateTotal()" value="<?php echo $thuong;?>" readonly style="color: red;"></td>
                     <td><input type="number" id="tienPhat" name="tienPhat" class="form-control"
-                            oninput="calculateTotal()" required></td>
+                            oninput="calculateTotal()" value="<?php echo $phat;?>" readonly style="color: red;" ></td>
                     <td><input type="number" id="luongThucNhan" name="luongThucNhan" class="form-control" readonly
                             style="color: red;"></td>
                 </tr>

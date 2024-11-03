@@ -1,37 +1,76 @@
 <?php
-if(isset($_POST['add_xinnghi'])){
+if (isset($_POST['add_xinnghi'])) {
     $add_msg = $obj->add_donxinnghi($_POST);
 }
-
-
-
 ?>
-
-
-
-
-              <div class="col-12 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Xin nghỉ phép</h4>
-                    <form class="forms-sample" method="POST" enctype="multipart/form-data" Required>
-                    <input type="hidden" name="nhanVien" value="<?php echo $admin_id; ?>">
-                      <div class="form-group">                                                                              
-                        <label for="">Lý do</label>
-                        <textarea name="lyDo" id="" class="form-control" placeholder="Nhập vào lý do xin nghỉ" Required></textarea>
-                      </div>
-                      <div class="form-group">
-                        <label for="">Từ ngày</label>
-                        <input type="date" name="tuNgay" class="form-control" id="" placeholder="Nhập ngày bắt đầu nghỉ" Required>
-                      </div>
-                      <div class="form-group">
-                        <label for="">Đến hết ngày</label>
-                        <input type="date" name="denNgay" class="form-control" id="" placeholder="Nhập ngày cuối cùng nghỉ" Required>
-                      </div>
-                           
-                      <button type="submit" class="btn btn-primary mr-2" name="add_xinnghi">Xác nhận</button>
-                      <button class="btn btn-dark">Hủy</button>
-                    </form>
-                  </div>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Xin nghỉ phép</h4>
+            <form class="forms-sample" method="POST" enctype="multipart/form-data" required>
+                <input type="hidden" name="nhanVien" value="<?php echo $admin_id; ?>">
+                <div class="form-group">
+                    <label for="">Lý do</label>
+                    <textarea name="lyDo" id="" class="form-control" placeholder="Nhập vào lý do xin nghỉ" required></textarea>
                 </div>
-              </div>
+                <div class="form-group">
+                    <label for="">Hình ảnh chứng minh</label>
+                    <input type="file" name="hinhanh" class="form-control" accept="image/*" required>
+                    <small class="form-text text-muted">Chọn hình ảnh chứng minh (JPG, PNG, GIF)</small>
+                </div>
+                <div class="form-group">
+                    <label for="">Từ ngày</label>
+                    <input type="date" name="tuNgay" class="form-control" id="tuNgay" placeholder="Nhập ngày bắt đầu nghỉ" required>
+                </div>
+                <div class="form-group">
+                    <label for="">Đến hết ngày</label>
+                    <input type="date" name="denNgay" class="form-control" id="denNgay" placeholder="Nhập ngày cuối cùng nghỉ" required>
+                </div>
+               
+                <button type="submit" class="btn btn-primary mr-2" name="add_xinnghi">Xác nhận</button>
+                <button type="reset" class="btn btn-dark">Hủy</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    const todayStr = `${yyyy}-${mm}-${dd}`;
+
+ 
+    document.getElementById('tuNgay').setAttribute('min', todayStr);
+    document.getElementById('denNgay').setAttribute('min', todayStr);
+
+ 
+    document.getElementById('tuNgay').addEventListener('change', function() {
+        const tuNgay = new Date(this.value);
+        const denNgayInput = document.getElementById('denNgay');
+        
+        if (tuNgay < today) {
+            alert("Ngày bắt đầu không được nhỏ hơn hôm nay!");
+            this.value = todayStr;
+            denNgayInput.value = todayStr;
+        } else if (denNgayInput.value && new Date(denNgayInput.value) < tuNgay) {
+            alert("Ngày kết thúc phải sau ngày bắt đầu!");
+            denNgayInput.value = ""; 
+        }
+    });
+
+    document.getElementById('denNgay').addEventListener('change', function() {
+        const denNgay = new Date(this.value);
+        const tuNgayInput = document.getElementById('tuNgay');
+        
+        if (denNgay < today) {
+            alert("Ngày kết thúc không được nhỏ hơn hôm nay!");
+            this.value = todayStr;
+        } else if (denNgay < new Date(tuNgayInput.value)) {
+            alert("Ngày kết thúc phải sau ngày bắt đầu!");
+            this.value = ""; 
+        }
+    });
+</script>

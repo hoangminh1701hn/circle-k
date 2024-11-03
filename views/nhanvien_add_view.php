@@ -46,15 +46,10 @@ if(isset($_POST['add_user'])){
                         </select>
                       </div>
                       <div class="form-group">
-                        <label>Hình đại diện</label>
-                        <input type="file" name="hinhdaidien" class="file-upload-default" accept="image/*">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                          </span>
-                        </div>
-                      </div>
+                    <label for="">Hình ảnh đại diện</label>
+                    <input type="file" name="hinhDaiDien" class="form-control" accept="image/*" required>
+                   
+                       </div>
                       <div class="form-group">
                         <label for="">Role</label>
                         <select name="user_role" class="form-control" id="">

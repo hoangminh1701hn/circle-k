@@ -27,6 +27,7 @@ if (isset($_GET['status'])) {
                             <th> # </th>
                             <th> Họ tên</th>
                             <th> Lý do </th>
+                            <th>Hình ảnh</th>
                             <th>Từ ngày</th>
                             <th> Đến ngày </th>
                             <th>Ngày xin phép</th>
@@ -48,12 +49,25 @@ if (isset($_GET['status'])) {
                                     } ?>
                                 </td>
                                 <td><?php echo $np['lyDo']; ?> </td>
+                                <td>
+                                    <?php if (!empty($np['hinhanh'])): ?>
+                                        <img src="<?php echo 'uploads/nghiphep/' . basename($np['hinhanh']); ?>"
+                                            alt="Hình ảnh chứng minh" style="width: 100px; height: auto;" data-toggle="modal"
+                                            data-target="#imageModal"
+                                            onclick="document.getElementById('modalImage').src = this.src;">
+                                    <?php else: ?>
+                                        <p>Không có hình ảnh</p>
+                                    <?php endif; ?>
+                                </td>
+
                                 <td><?php echo $np['tuNgay']; ?></td>
                                 <td> <?php echo $np['denNgay']; ?> </td>
                                 <td> <?php echo $np['ngayXinPhep']; ?> </td>
-                                <td> 
-                                    <a href="?status=Duyet&id=<?php echo $np['id_np']; ?>" class="badge badge-success">Duyệt</a>
-                                    <a href="?status=TuChoi&id=<?php echo $np['id_np']; ?>" class="badge badge-danger">Từ chối</a>
+                                <td>
+                                    <a href="?status=Duyet&id=<?php echo $np['id_np']; ?>"
+                                        class="badge badge-success">Duyệt</a>
+                                    <a href="?status=TuChoi&id=<?php echo $np['id_np']; ?>" class="badge badge-danger">Từ
+                                        chối</a>
                                 </td>
                             </tr>
                             <?php
@@ -62,6 +76,24 @@ if (isset($_GET['status'])) {
                         ?>
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Hình ảnh chứng minh</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" src="" alt="Hình ảnh chứng minh" class="img-fluid">
             </div>
         </div>
     </div>
