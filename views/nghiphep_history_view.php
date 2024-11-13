@@ -1,6 +1,5 @@
 <?php
-
-$show_nghiphep = $obj->show_lichsu_nghiphep();
+$show_nghiphep = $obj->show_lichsu_nghiphep($admin_role, $admin_id);
 $user_info = $obj->show_admin_user();
 $user_array = array();
 while ($user = mysqli_fetch_assoc($user_info)) {
@@ -11,7 +10,6 @@ while ($user = mysqli_fetch_assoc($user_info)) {
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Lịch sử nghỉ phép</h4>
-            </p>
             <div class="table-responsive">
                 <table class="table table-bordered table-contextual">
                     <thead>
@@ -65,7 +63,6 @@ while ($user = mysqli_fetch_assoc($user_info)) {
                             <?php
                             $dem++;
                         }
-                        
                         ?>
                     </tbody>
                 </table>

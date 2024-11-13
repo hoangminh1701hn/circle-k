@@ -101,6 +101,7 @@
             <span class="menu-title">Bảng điều hướng</span>
           </a>
         </li>
+        <?php if ($admin_role == 'CuaHangTruong') { ?>
         <li class="nav-item menu-items">
           <a class="nav-link" data-toggle="collapse" href="#chamcong" aria-expanded="false" aria-controls="chamcong">
             <span class="menu-icon">
@@ -117,7 +118,8 @@
             </ul>
           </div>
         </li>
-
+        <?php } ?>
+        <?php if ($admin_role == 'CuaHangTruong') { ?>
         <li class="nav-item menu-items">
           <a class="nav-link" data-toggle="collapse" href="#nhanvien" aria-expanded="false" aria-controls="nhanvien">
             <span class="menu-icon">
@@ -133,7 +135,7 @@
             </ul>
           </div>
         </li>
-
+        <?php } ?>
 
         <li class="nav-item menu-items">
           <a class="nav-link" data-toggle="collapse" href="#nghiphep" aria-expanded="false" aria-controls="nghiphep">
@@ -145,7 +147,9 @@
           </a>
           <div class="collapse" id="nghiphep">
             <ul class="nav flex-column sub-menu">
+            <?php if ($admin_role == 'CuaHangTruong') { ?>
               <li class="nav-item"><a class="nav-link" href="nghiphep_manage.php">Quản lý nghỉ phép</a></li>
+              <?php } ?>
               <li class="nav-item"><a class="nav-link" href="nghiphep_history.php">Lịch sử nghỉ phép</a></li>
               <li class="nav-item"><a class="nav-link" href="nghiphep_add.php">Xin nghỉ phép</a></li>
             </ul>
@@ -162,7 +166,9 @@
           <div class="collapse" id="luong">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="luong_manage.php">Quản lý lương</a></li>
+              <?php if ($admin_role == 'CuaHangTruong') { ?>
               <li class="nav-item"> <a class="nav-link" href="luong_add1.php"> Thêm lương </a></li>
+              <?php } ?>
             </ul>
           </div>
         </li>
@@ -179,13 +185,17 @@
           <div class="collapse" id="dsThuongPhat">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"><a class="nav-link" href="thuong_manage.php">Quản lý DS thưởng</a></li>
+              <?php if ($admin_role == 'CuaHangTruong') { ?>
               <li class="nav-item"><a class="nav-link" href="thuong_add.php">Thêm DS thưởng</a></li>
+              <?php } ?>
               <li class="nav-item"><a class="nav-link" href="phat_manage.php">Quản lý DS phạt</a></li>
+              <?php if ($admin_role == 'CuaHangTruong') { ?>
               <li class="nav-item"><a class="nav-link" href="phat_add.php">Thêm DS phạt</a></li>
+              <?php } ?>
             </ul>
           </div>
         </li>
-
+        <?php if ($admin_role == 'CuaHangTruong') { ?>
         <li class="nav-item menu-items">
           <a class="nav-link" data-toggle="collapse" href="#loaithuongphat" aria-expanded="false"
             aria-controls="loaithuongphat">
@@ -198,13 +208,17 @@
           <div class="collapse" id="loaithuongphat">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"><a class="nav-link" href="loaithuong_manage.php">Quản lý loại tiền thưởng</a></li>
+              
               <li class="nav-item"><a class="nav-link" href="loaithuong_add.php">Thêm loại tiền thưởng</a></li>
+            
               <li class="nav-item"><a class="nav-link" href="loaiphat_manage.php">Quản lý loại tiền phạt</a></li>
+              
               <li class="nav-item"><a class="nav-link" href="loaiphat_add.php">Thêm loại tiền phạt</a></li>
+            
             </ul>
           </div>
         </li>
-
+        <?php } ?>
 
       </ul>
     </nav>
@@ -288,7 +302,7 @@
                     </div>
                   </div>
                   <div class="preview-item-content">
-                    <p class="preview-subject mb-1">Cài đặt</p>
+                    <p class="preview-subject mb-1">Đổi mật khẩu</p>
                   </div>
                 </a>
                 <div class="dropdown-divider"></div>
@@ -311,3 +325,10 @@
           </button>
         </div>
       </nav>
+
+      <script>
+       $(document).ready(function() {
+    $('#profileDropdown').dropdown();
+    $('#notificationDropdown').dropdown();
+});
+</script>

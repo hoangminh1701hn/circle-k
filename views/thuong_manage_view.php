@@ -1,6 +1,6 @@
 <?php
 
-$showds = $obj->show_dsthuong();
+$showds = $obj->show_dsthuong ($admin_role,$admin_id);
 $thuong_info = $obj->show_thuong();
 $user_info = $obj->show_admin_user();
 
@@ -33,7 +33,9 @@ while ($user = mysqli_fetch_assoc($user_info)) {
                             <th> Họ tên</th>
                             <th> Loại thưởng</th>
                             <th> Số lần thưởng</th>
+                            <?php if ($admin_role == 'CuaHangTruong') { ?>
                             <th>Action</th>
+                            <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,7 +58,7 @@ while ($user = mysqli_fetch_assoc($user_info)) {
                                     }
                                 } ?></td>
                                 <td><?php echo $ds['soLanThuong']; ?></td>
-
+                                <?php if ($admin_role == 'CuaHangTruong') { ?>
                                 <td>
                                 <a href="thuong_edit.php?status=edit&&id=<?php echo $ds['id_dst'] ?>"
                                     class="btn btn-sm btn-warning">Sửa </a>
@@ -64,6 +66,7 @@ while ($user = mysqli_fetch_assoc($user_info)) {
                                     onclick="confirmDelete(<?php echo $ds['id_dst'] ?>)">Xóa</a>
 
                                 </td>
+                                <?php } ?>
                             </tr>
                             <?php
                             $dem++;

@@ -124,14 +124,7 @@ class  adminback
             return $result;
         }
     }
-    function show_admin_user_by_nhaxuong($nhaxuong)
-    {
-        $query = "SELECT * FROM `taikhoan` WHERE `nhaxuong`='$nhaxuong'";
-        if (mysqli_query($this->connection, $query)) {
-            $result = mysqli_query($this->connection, $query);
-            return $result;
-        }
-    }
+   
     function update_hoso($data)
     {
         $u_id = $data['id_acc'];
@@ -292,14 +285,25 @@ class  adminback
     }
     
 
-    function show_luong()
+    function show_luong($admin_role, $admin_id)
     {
-        $query = "SELECT * FROM `luong`";
-
-        if (mysqli_query($this->connection, $query)) {
-            $ctg_info = mysqli_query($this->connection, $query);
-            return $ctg_info;
-        }
+            $query = "SELECT * FROM `luong`";
+            $result = mysqli_query($this->connection, $query);
+    
+            if ($result) {
+               
+                if ($admin_role == "CuaHangTruong") {
+                    return $result;
+                } elseif($admin_role == "NhanVien") {
+                   
+                    $query = "SELECT * FROM `luong` WHERE `taikhoan` = $admin_id order by ngayThanhToan desc";
+                    $result = mysqli_query($this->connection, $query);
+                    return $result;
+                }
+            }
+     
+    
+        return false;
     }
     public function tinhSoGioLamTheoThang($employee_id, $thang) {
         $totalHours = 0;
@@ -441,15 +445,27 @@ class  adminback
         // Trả về chuỗi đã được xử lý
         return $str;
     }
-    function show_lichsu_nghiphep()
-    {
-        $query = "SELECT * FROM `nghiphep`";
+    function show_dsthuong($admin_role, $admin_id)
+{
+        $query = "SELECT * FROM `danhsachthuong`";
+        $result = mysqli_query($this->connection, $query);
 
-        if (mysqli_query($this->connection, $query)) {
-            $nghiphep_info = mysqli_query($this->connection, $query);
-            return $nghiphep_info;
+        if ($result) {
+           
+            if ($admin_role == "CuaHangTruong") {
+                return $result;
+            } elseif($admin_role == "NhanVien") {
+               
+                $query = "SELECT * FROM `danhsachthuong` WHERE `nhanVien` = $admin_id ";
+                $result = mysqli_query($this->connection, $query);
+                return $result;
+            }
         }
-    }
+ 
+
+    return false;
+}
+
     function show_xin_nghiphep()
     {
         $query = "SELECT * FROM `nghiphep` WHERE `trangthai`='DangXuLy'";
@@ -636,21 +652,105 @@ class  adminback
         }
     }
 
-    function show_dsthuong()
+    function show_lichsu_nghiphep($admin_role, $admin_id)
     {
-        $query = "SELECT * FROM `danhsachthuong` ";
-        if (mysqli_query($this->connection, $query)) {
+            $query = "SELECT * FROM `nghiphep`";
             $result = mysqli_query($this->connection, $query);
-            return $result;
+    
+            if ($result) {
+               
+                if ($admin_role == "CuaHangTruong") {
+                    return $result;
+                } elseif($admin_role == "NhanVien") {
+                   
+                    $query = "SELECT * FROM `nghiphep` WHERE `nhanVien` = $admin_id order by ngayxinPhep desc";
+                    $result = mysqli_query($this->connection, $query);
+                    return $result;
+                }
+            }
+     
+    
+        return false;
+    }
+    function count_user()
+    {
+        $query = "SELECT COUNT(*) AS demacc FROM `taikhoan`";
+
+        $result = mysqli_query($this->connection, $query);
+
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $demacc = $row['demacc'];
+            return $demacc;
+        } else {
+            return "Error: " . mysqli_error($this->connection);
         }
     }
-    function show_dsphat()
+    function count_xinnghiphep()
     {
-        $query = "SELECT * FROM `danhsachphat` ";
-        if (mysqli_query($this->connection, $query)) {
-            $result = mysqli_query($this->connection, $query);
-            return $result;
+        $query = "SELECT COUNT(*) AS demnp FROM `nghiphep` where trangthai='DangXuLy'";
+
+        $result = mysqli_query($this->connection, $query);
+
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $demnp = $row['demnp'];
+            return $demnp;
+        } else {
+            return "Error: " . mysqli_error($this->connection);
         }
+    }
+    function count_chuathanhtoan()
+    {
+        
+        $query = "SELECT COUNT(*) AS demtt FROM `luong` WHERE`ngayThanhToan` = '0000-00-00 00:00:00'";
+    
+        $result = mysqli_query($this->connection, $query);
+    
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $demtt = $row['demtt'];
+            return $demtt;
+        } else {
+            return "Error: " . mysqli_error($this->connection);
+        }
+    }
+    function sum_luongThucNhan($admin_id)
+    {
+       
+        $query = "SELECT SUM(luongThucNhan) AS tongluong FROM `luong` WHERE `taikhoan` = '$admin_id'";
+    
+        $result = mysqli_query($this->connection, $query);
+    
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $tongluong = $row['tongluong'];
+            return $tongluong;
+        } else {
+            return "Error: " . mysqli_error($this->connection);
+        }
+    }
+    
+    
+    function show_dsphat($admin_role, $admin_id)
+    {
+            $query = "SELECT * FROM `danhsachphat`";
+            $result = mysqli_query($this->connection, $query);
+    
+            if ($result) {
+               
+                if ($admin_role == "CuaHangTruong") {
+                    return $result;
+                } elseif($admin_role == "NhanVien") {
+                   
+                    $query = "SELECT * FROM `danhsachphat` WHERE `nhanVien` = $admin_id";
+                    $result = mysqli_query($this->connection, $query);
+                    return $result;
+                }
+            }
+     
+    
+        return false;
     }
     function delete_dsthuong($id)
     {

@@ -53,7 +53,7 @@ if(isset($_POST['edit_user'])){
                       </div>
                       <div class="form-group">
                     <label for="">Hình ảnh đại diện</label>
-                    <input type="file" name="hinhDaiDien" class="form-control" accept="image/*" required>
+                    <input type="file" name="hinhDaiDien" class="form-control" accept="image/*">
                     <img src="uploads/avatar/<?php echo $user['hinhDaiDien']?>" style="width: 80px;" > <br>
                        </div>
                       <input type="hidden" name="user_id" value="<?php echo $user['id_tk']?>">

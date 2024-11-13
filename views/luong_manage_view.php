@@ -1,5 +1,5 @@
 <?php
-$showluong = $obj->show_luong();
+$showluong = $obj->show_luong($admin_role, $admin_id);
 $user_info = $obj->show_admin_user();
 $dem = 1;
 if (isset($_GET['status'])) {
@@ -37,7 +37,8 @@ while ($user = mysqli_fetch_assoc($user_info)) {
                             <th> Phạt </th>
                             <th>Lương thực nhận</th>
                             <th>Ngày Thanh Toán</th>
-                            <th>Xác nhận</th>
+                            <?php if ($admin_role == 'CuaHangTruong') { ?>
+                                <th>Xác nhận</th> <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,16 +67,16 @@ while ($user = mysqli_fetch_assoc($user_info)) {
 
                                 }
                                 ?></td>
-
-                                <td>
-                                    <a href="javascript:void(0);" class="badge badge-outline-success"
-                                        onclick="confirmXacNhan(<?php echo $luong['id_luong'] ?>)">Xác nhận</a>
-                                    <a href="luong_edit.php?trangthai=edit&&id=<?php echo $luong['id_luong'] ?>"
-                                        class="badge badge-outline-warning">Sửa</a>
-                                    <a href="javascript:void(0);" class="badge badge-outline-danger"
-                                        onclick="confirmDelete(<?php echo $luong['id_luong'] ?>)">Xóa</a>
-                                </td>
-
+                                <?php if ($admin_role == 'CuaHangTruong') { ?>
+                                    <td>
+                                        <a href="javascript:void(0);" class="badge badge-outline-success"
+                                            onclick="confirmXacNhan(<?php echo $luong['id_luong'] ?>)">Xác nhận</a>
+                                        <a href="luong_edit.php?trangthai=edit&&id=<?php echo $luong['id_luong'] ?>"
+                                            class="badge badge-outline-warning">Sửa</a>
+                                        <a href="javascript:void(0);" class="badge badge-outline-danger"
+                                            onclick="confirmDelete(<?php echo $luong['id_luong'] ?>)">Xóa</a>
+                                    </td>
+                                <?php } ?>
                             </tr>
                             <?php
                             $dem++;
@@ -91,9 +92,9 @@ while ($user = mysqli_fetch_assoc($user_info)) {
 </div>
 
 <script>
-function confirmXacNhan(id) {
-    if (confirm("Bạn có chắc chắn muốn xác nhận thanh toán này không?")) {
-        window.location.href = "?status=xacnhan&id=" + id;
+    function confirmXacNhan(id) {
+        if (confirm("Bạn có chắc chắn muốn xác nhận thanh toán này không?")) {
+            window.location.href = "?status=xacnhan&id=" + id;
+        }
     }
-}
 </script>
