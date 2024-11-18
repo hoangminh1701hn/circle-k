@@ -5,9 +5,11 @@ $thuong_info = $obj->show_thuong();
 $user_info = $obj->show_admin_user();
 
 if (isset($_GET['status'])) {
-    $admin_id = $_GET['id'];
+    $id = $_GET['id'];
     if ($_GET['status'] == 'delete') {
-        $obj->delete_dsthuong($admin_id);
+        $obj->delete_dsthuong($id);
+    }if ($_GET['status'] == 'xacnhan') {
+        $obj->xacnhan_dsthuong($id);
     }
 }
 $thuong_array = array();
@@ -60,6 +62,8 @@ while ($user = mysqli_fetch_assoc($user_info)) {
                                 <td><?php echo $ds['soLanThuong']; ?></td>
                                 <?php if ($admin_role == 'CuaHangTruong') { ?>
                                 <td>
+                                <a href="javascript:void(0);" class="btn btn-sm btn-success"
+                                onclick="confirmUp(<?php echo $ds['id_dst'] ?>)">+</a>
                                 <a href="thuong_edit.php?status=edit&&id=<?php echo $ds['id_dst'] ?>"
                                     class="btn btn-sm btn-warning">Sửa </a>
                                 <a href="javascript:void(0);" class="btn btn-sm btn-danger"
@@ -79,3 +83,11 @@ while ($user = mysqli_fetch_assoc($user_info)) {
         </div>
     </div>
 </div>
+
+<script>
+    function confirmUp(id) {
+        if (confirm("Bạn có chắc chắn lựa chọn này không?")) {
+            window.location.href = "?status=xacnhan&id=" + id;
+        }
+    }
+</script>

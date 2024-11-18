@@ -16,7 +16,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Cơ sở dữ liệu: `circlek`
@@ -130,7 +130,7 @@ CREATE TABLE `danhsachphat` (
   `nhanVien` int(11) NOT NULL,
   `phat` int(11) NOT NULL,
   `soLanPhat` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `danhsachphat`
@@ -154,7 +154,7 @@ CREATE TABLE `danhsachthuong` (
   `nhanVien` int(11) NOT NULL,
   `thuong` int(11) NOT NULL,
   `soLanThuong` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `danhsachthuong`
@@ -182,7 +182,7 @@ CREATE TABLE `luong` (
   `thang` int(2) NOT NULL,
   `luongThucNhan` int(255) NOT NULL,
   `ngayThanhToan` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `luong`
@@ -202,13 +202,13 @@ INSERT INTO `luong` (`id_luong`, `taikhoan`, `luongTheoGio`, `soGioLam`, `phuCap
 CREATE TABLE `nghiphep` (
   `id_np` int(10) UNSIGNED NOT NULL,
   `nhanVien` int(10) NOT NULL,
-  `lyDo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `hinhanh` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lyDo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `hinhanh` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `tuNgay` date NOT NULL,
   `denNgay` date NOT NULL,
   `ngayXinPhep` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `trangThai` enum('DangXuLy','Duyet','TuChoi','') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'DangXuLy'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `trangThai` enum('DangXuLy','Duyet','TuChoi','') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'DangXuLy'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `nghiphep`
@@ -233,9 +233,9 @@ INSERT INTO `nghiphep` (`id_np`, `nhanVien`, `lyDo`, `hinhanh`, `tuNgay`, `denNg
 
 CREATE TABLE `phat` (
   `id_phat` int(11) UNSIGNED NOT NULL,
-  `loaiPhat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `loaiPhat` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `soTienPhat` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `phat`
@@ -253,16 +253,16 @@ INSERT INTO `phat` (`id_phat`, `loaiPhat`, `soTienPhat`) VALUES
 
 CREATE TABLE `taikhoan` (
   `id_tk` int(11) UNSIGNED NOT NULL,
-  `hoTen` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Sdt` char(11) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `diaChi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gioiTinh` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `matKhau` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` enum('NhanVien','CuaHangTruong','','') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NhanVien',
-  `hinhDaiDien` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hoTen` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `Sdt` char(11) COLLATE utf8_unicode_ci NOT NULL,
+  `diaChi` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `gioiTinh` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `matKhau` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `role` enum('NhanVien','CuaHangTruong','','') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'NhanVien',
+  `hinhDaiDien` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `ngayTao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `taikhoan`
@@ -284,9 +284,9 @@ INSERT INTO `taikhoan` (`id_tk`, `hoTen`, `Sdt`, `diaChi`, `gioiTinh`, `email`, 
 
 CREATE TABLE `thuong` (
   `id_thuong` int(11) UNSIGNED NOT NULL,
-  `loaiThuong` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `loaiThuong` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `soTienThuong` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `thuong`

@@ -80,6 +80,12 @@
                                             include ("views/loaithuong_add_view.php");
                                         }elseif($views=="loaithuong_edit" ){
                                             include ("views/loaithuong_edit_view.php");
+                                        }elseif ($views== "insurance_manage") {
+                                            include("views/insurance_manage_view.php");
+                                        }elseif ($views== "add_insurance") {
+                                            include("views/add_insurance_view.php");
+                                        }elseif ($views== "edit_insurance") {
+                                            include("views/edit_insurance_view.php");
                                         }
                                         else{
                                             echo '<script>

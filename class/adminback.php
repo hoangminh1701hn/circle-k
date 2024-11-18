@@ -262,25 +262,35 @@ class  adminback
     }
 
     function add_luong($data) {
-        $taiKhoan = $data['taiKhoan'];  // Check if this key exists in $_POST
+        $taiKhoan = $data['taiKhoan'];  
         $luongTheoGio = $data['luongTheoGio'];
         $soGioLam = $data['soGioLam'];
         $phuCap = $data['phuCap'];
         $tienThuong = $data['tienThuong'];
         $tienPhat = $data['tienPhat'];
-        $thang=$data['thang'];
+        $thang = $data['thang'];
         $luongThucNhan = $data['luongThucNhan'];
     
-        $query = "INSERT INTO `luong` (`taiKhoan`, `luongTheoGio`, `soGioLam`, `phuCap`, `thuong`, `phat`,`thang`, `luongThucNhan`) 
-                  VALUES ('$taiKhoan', '$luongTheoGio', '$soGioLam', '$phuCap', '$tienThuong', '$tienPhat','$thang', '$luongThucNhan')";
+        
+        $query = "INSERT INTO `luong` (`taiKhoan`, `luongTheoGio`, `soGioLam`, `phuCap`, `thuong`, `phat`, `thang`, `luongThucNhan`) 
+                  VALUES ('$taiKhoan', '$luongTheoGio', '$soGioLam', '$phuCap', '$tienThuong', '$tienPhat', '$thang', '$luongThucNhan')";
     
         if (mysqli_query($this->connection, $query)) {
+           
+            $queryThuong = "UPDATE `danhsachthuong` SET `soLanThuong` = 0 WHERE `nhanVien` = '$taiKhoan'";
+            mysqli_query($this->connection, $queryThuong);
+    
+          
+            $queryPhat = "UPDATE `danhsachphat` SET `soLanPhat` = 0 WHERE `nhanVien` = '$taiKhoan'";
+            mysqli_query($this->connection, $queryPhat);
+    
+            
             echo '<script>
                 alert("Thêm Lương thành công");
                 window.location.href = "luong_add1.php";
             </script>';
         } else {
-            return "Thêm Lương thất bại!";
+            return "Thêm Lương thất bại: " . mysqli_error($this->connection);
         }
     }
     
@@ -401,6 +411,17 @@ class  adminback
             echo '<script>
             alert("Cập nhật thành công");
             window.location.href = "luong_manage.php";
+            </script>';
+        }
+    }
+    function xacnhan_dsthuong($id_dst)
+    {
+       
+        $query = "UPDATE `danhsachthuong` SET `soLanThuong` = `soLanThuong`+ 1  WHERE `id_dst` = '$id_dst'";
+        if (mysqli_query($this->connection, $query)) {
+            echo '<script>
+            alert("Cập nhật thành công");
+            window.location.href = "thuong_manage.php";
             </script>';
         }
     }
@@ -717,19 +738,18 @@ class  adminback
     }
     function sum_luongThucNhan($admin_id)
     {
-       
-        $query = "SELECT SUM(luongThucNhan) AS tongluong FROM `luong` WHERE `taikhoan` = '$admin_id'";
-    
+        $query = "SELECT COALESCE(SUM(luongThucNhan), 0) AS tongluong FROM `luong` WHERE `taikhoan` = '$admin_id'";
         $result = mysqli_query($this->connection, $query);
     
         if ($result) {
             $row = mysqli_fetch_assoc($result);
-            $tongluong = $row['tongluong'];
-            return $tongluong;
+            return $row['tongluong']; // Trả về giá trị tổng
         } else {
             return "Error: " . mysqli_error($this->connection);
         }
     }
+    
+    
     
     
     function show_dsphat($admin_role, $admin_id)
@@ -920,6 +940,137 @@ class  adminback
             return $tongtien;
         } else {
             return "Error: " . mysqli_error($this->connection);
+        }
+    }
+    function get_all_insurance() {
+        $query = "
+            SELECT 
+                insurance.id, 
+                insurance.taikhoan, 
+                taikhoan.hoTen AS ten_nhan_vien, 
+                insurance.insurance_type, 
+                insurance.start_date, 
+                insurance.end_date, 
+                insurance.notes, 
+                insurance.coverage_amount 
+            FROM 
+                insurance 
+            JOIN 
+                taikhoan ON insurance.taikhoan = taikhoan.id_tk
+        ";
+    
+        $result = mysqli_query($this->connection, $query);
+    
+        if (!$result) {
+            die("Query failed: " . mysqli_error($this->connection));
+        }
+    
+        return $result;
+    }
+
+    public function update_insurance($data) {
+        $id_insurance = $data['id_insurance'];
+        $taiKhoan = $data['taiKhoan'];
+        $insurance_type = $data['insurance_type'];
+        $start_date = $data['start_date'];
+        $end_date = $data['end_date'];
+        $note = $data['note'];
+        $price = $data['price'];
+        $coverage_amount = $data['coverage_amount'];
+    
+        $query = "UPDATE insurance SET
+            insurance_type = '$insurance_type',
+            start_date = '$start_date',
+            end_date = '$end_date',
+            note = '$note',
+            price = '$price',
+            coverage_amount = '$coverage_amount'
+            WHERE id = $id_insurance AND taikhoan = $taiKhoan";
+    
+        if (mysqli_query($this->connection, $query)) {
+            return "Cập nhật bảo hiểm thành công!";
+        } else {
+            return "Cập nhật bảo hiểm thất bại!";
+        }
+    }
+    
+    function show_insurance_byID($id)
+    {
+        $query = "SELECT * FROM `insurance` WHERE id_insurance = $id";
+
+        if (mysqli_query($this->connection, $query)) {
+            $insurance_info = mysqli_query($this->connection, $query);
+            return mysqli_fetch_assoc($insurance_info);
+        }
+    }
+
+    
+
+
+    function add_insurance($data) {
+        // Nhận dữ liệu từ form (giả sử form gửi qua method POST)
+        $taikhoan = $data['taikhoan'];  // ID tài khoản mới (tên cột là taikhoan)
+        $insurance_type = $data['insurance_type'];  // Loại bảo hiểm
+        $start_date = $data['start_date'];  // Ngày bắt đầu bảo hiểm
+        $end_date = $data['end_date'];  // Ngày kết thúc bảo hiểm
+        $coverage_amount = $data['coverage_amount'];  // Số tiền bảo hiểm
+        $notes = $data['notes'];  // Ghi chú bảo hiểm
+    
+        // Truy vấn SQL để thêm dữ liệu vào bảng insurance
+        $query = "INSERT INTO `insurance` (`taikhoan`, `insurance_type`, `start_date`, `end_date`, `coverage_amount`, `notes`) 
+                  VALUES ('$taikhoan', '$insurance_type', '$start_date', '$end_date', '$coverage_amount', '$notes')";
+    
+        // Kiểm tra nếu truy vấn thành công
+        if (mysqli_query($this->connection, $query)) {
+            echo '<script>
+                alert("Thêm bảo hiểm thành công");
+                window.location.href = "insurance_add.php"; // Quay lại trang thêm bảo hiểm
+            </script>';
+        } else {
+            return "Thêm bảo hiểm thất bại!";
+        }
+    }
+
+    /*function edit_insurance($data)
+    {
+        $insurance_id = $data['id'];
+        $employee_id = $data['taikhoan'];
+        $insurance_type = $data['insurance_type'];
+        $start_date = $data['start_date'];
+        $end_date = $data['end_date'];
+        $notes = $data['notes'];
+        $coverage_amount = $data['coverage_amount'];
+
+        // Câu truy vấn để cập nhật thông tin bảo hiểm
+        $query = "UPDATE `insurance` SET 
+                    `taikhoan` = '$employee_id', 
+                    `insurance_type` = '$insurance_type', 
+                    `start_date` = '$start_date', 
+                    `end_date` = '$end_date', 
+                    `notes` = '$notes', 
+                    `coverage_amount` = '$coverage_amount' 
+                WHERE `id` = $insurance_id";
+
+        if (mysqli_query($this->connection, $query)) {
+            echo '<script>
+            alert("Chỉnh sửa bảo hiểm thành công");
+            window.location.href = "insurance_manage.php";
+            </script>';
+        } else {
+            echo '<script>
+            alert("Lỗi khi chỉnh sửa bảo hiểm: ' . mysqli_error($this->connection) . '");
+            </script>';
+        }
+    }*/
+    
+    function delete_insurance($id)
+    {
+        $query = "DELETE FROM `insurance` WHERE  id = $id";
+        if (mysqli_query($this->connection, $query)) {
+            echo '<script>
+            alert("Xóa thành công");
+            window.location.href = "insurance_manage.php";
+            </script>';
         }
     }
 

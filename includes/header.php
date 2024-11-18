@@ -218,6 +218,22 @@
             </ul>
           </div>
         </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" data-toggle="collapse" href="#baohiem" aria-expanded="false" aria-controls="baohiem">
+            <span class="menu-icon">
+              <i class="mdi mdi-shield"></i>
+            </span>
+            <span class="menu-title">Bảo hiểm</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="baohiem">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="insurance_manage.php">Quản lý bảo hiểm</a></li>
+              <li class="nav-item"> <a class="nav-link" href="add_insurance.php">Thêm bảo hiểm</a></li>
+            </ul>
+          </div>
+        </li>
+
         <?php } ?>
 
       </ul>
