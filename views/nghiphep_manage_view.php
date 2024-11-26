@@ -31,6 +31,7 @@ if (isset($_GET['status'])) {
                             <th>Từ ngày</th>
                             <th> Đến ngày </th>
                             <th>Ngày xin phép</th>
+                          
                             <th>Thao tác</th>
                         </tr>
                     </thead>

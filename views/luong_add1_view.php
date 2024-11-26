@@ -45,3 +45,8 @@ $user_info = $obj->show_admin_user();
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $("#taiKhoan").select2();
+    });
+</script>

@@ -86,6 +86,14 @@
                                             include("views/add_insurance_view.php");
                                         }elseif ($views== "edit_insurance") {
                                             include("views/edit_insurance_view.php");
+                                        }elseif ($views== "nghiphep_edit") {
+                                            include("views/nghiphep_edit_view.php");
+                                        }elseif ($views== "doimatkhau") {
+                                            include("views/doimatkhau_view.php");
+                                        }elseif ($views== "hoso") {
+                                            include("views/hoso_view.php");
+                                        }elseif ($views== "hoso_edit") {
+                                            include("views/hoso_edit_view.php");
                                         }
                                         else{
                                             echo '<script>

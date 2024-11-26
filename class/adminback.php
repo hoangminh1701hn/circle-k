@@ -124,66 +124,6 @@ class  adminback
             return $result;
         }
     }
-   
-    function update_hoso($data)
-    {
-        $u_id = $data['id_acc'];
-        $name = $data['name'];
-        $sdt = $data['sdt'];
-        $diachi = $data['diachi'];
-        $doanhnghiep = $data['doanhnghiep'];
-        $vungsanxuat = $data['vungsanxuat'];
-        $nhaxuong = $data['nhaxuong'];
-        $thongtin = $data['thongtin'];
-        // $trangthai = $data['trangthai'];
-
-        if (!empty($_FILES['hinhDaiDien']['tmp_name'])) {
-            $hinhdaidien_name = $_FILES['hinhDaiDien']['name'];
-            $hinhdaidien_size = $_FILES['hinhDaiDien']['size'];
-            $hinhdaidien_tmp = $_FILES['hinhDaiDien']['tmp_name'];
-            $img_ext = pathinfo($hinhdaidien_name, PATHINFO_EXTENSION);
-            list($width, $height) = getimagesize($hinhdaidien_tmp);
-
-            if ($img_ext == "jpg" || $img_ext == 'jpeg' || $img_ext == "png") {
-                if ($hinhdaidien_size <= 2e+6 && $width < 2701 && $height < 2701) {
-                    $select_query = "SELECT * FROM `taikhoan` WHERE id_acc=$u_id";
-                    $result = mysqli_query($this->connection, $select_query);
-                    $row = mysqli_fetch_assoc($result);
-                    $pre_img = $row['hinhdaidien'];
-                    unlink("uploads/avatar/" . $pre_img);
-
-                    $query = "UPDATE `taikhoan` SET `doanhnghiep` = '$doanhnghiep', `vungsanxuat` = '$vungsanxuat', `nhaxuong` = '$nhaxuong', `hoten` = '$name', `dienthoai` = '$sdt', `diachi` = '$diachi', `thongtin` = '$thongtin', `hinhDaiDien` = '$hinhdaidien_name' WHERE `id_acc` = '$u_id';";
-
-                    if (mysqli_query($this->connection, $query) && move_uploaded_file($hinhdaidien_tmp, "uploads/avatar/" . $hinhdaidien_name)) {
-                        $msg = 1; // Thành công
-                        return $msg;
-                    } else {
-                        $msg = 2; // Thất bại
-                        return $msg;
-                    }
-                } else {
-                    $msg = 3; // Kích thước hoặc định dạng không hợp lệ
-                    return $msg;
-                }
-            } else {
-                $msg = 4; // Định dạng file không hợp lệ
-                return $msg;
-            }
-        } else {
-            // Nếu không có tệp ảnh mới được chọn, chỉ cập nhật thông tin người dùng mà không cần di chuyển tệp ảnh cũ
-            $query = "UPDATE `taikhoan` SET `doanhnghiep` = '$doanhnghiep', `vungsanxuat` = '$vungsanxuat', `nhaxuong` = '$nhaxuong', `hoten` = '$name', `dienthoai` = '$sdt', `diachi` = '$diachi', `thongtin` = '$thongtin' WHERE `id_acc` = '$u_id';";
-
-            if (mysqli_query($this->connection, $query)) {
-                $msg = 5; // Thành công
-                return $msg;
-            } else {
-                $msg = 6; // Thất bại
-                return $msg;
-            }
-        }
-    }
-
-
     function update_admin($data)
     {
         $user_id = $data['user_id'];
@@ -243,7 +183,65 @@ class  adminback
             }
         }
     }
+    function update_hoso($data)
+    {
+        $user_id = $data['user_id'];
+        $user_hoten = $data['user_hoten'];
+        $user_email = $data['user_email'];
+        $user_sdt = $data['user_sdt'];
+        $user_adress = $data['user_adress'];
+        $user_gender = $data['user_gender'];
+      
 
+
+        // Kiểm tra xem có tập tin hình ảnh nào được tải lên không
+        if (!empty($_FILES['hinhDaiDien']['tmp_name'])) {
+            $hinhdaidien_name = $_FILES['hinhDaiDien']['name'];
+            $hinhdaidien_size = $_FILES['hinhDaiDien']['size'];
+            $hinhdaidien_tmp = $_FILES['hinhDaiDien']['tmp_name'];
+            $img_ext = pathinfo($hinhdaidien_name, PATHINFO_EXTENSION);
+            list($width, $height) = getimagesize($hinhdaidien_tmp);
+
+            if ($img_ext == "jpg" || $img_ext == 'jpeg' || $img_ext == "png") {
+                if ($hinhdaidien_size <= 2e+6 && $width < 2701 && $height < 2701) {
+                    $select_query = "SELECT * FROM `taikhoan` WHERE id_tk=$user_id";
+                    $result = mysqli_query($this->connection, $select_query);
+                    $row = mysqli_fetch_assoc($result);
+                    $pre_img = $row['hinhDaiDien'];
+                    unlink("uploads/avatar/" . $pre_img);
+
+                    $query = "UPDATE `taikhoan` SET `hoTen` = '$user_hoten', `Sdt` = '$user_sdt', `diaChi` = '$user_adress', `gioiTinh` = '$user_gender', `email` = '$user_email', `hinhDaiDien` = '$hinhdaidien_name' WHERE `taikhoan`.`id_tk` = '$user_id';";
+
+                    if (mysqli_query($this->connection, $query) && move_uploaded_file($hinhdaidien_tmp, "uploads/avatar/" . $hinhdaidien_name)) {
+                        echo '<script>
+                            alert("Chỉnh sửa tài khoản thành công");
+                            window.location.href = "hoso.php";
+                        </script>';
+                    } else {
+                        echo "Upload failed!";
+                    }
+                } else {
+                    $msg = "Sorry !! Pdt image max height: 2701 px and width: 2701 px, but you are trying {$width} px and {$height} px";
+                    return $msg;
+                }
+            } else {
+                $msg = "File should be jpg or png format";
+                return $msg;
+            }
+        } else {
+            // Nếu không có tập tin hình ảnh mới được tải lên, giữ nguyên ảnh cũ và chỉ cập nhật thông tin khác của sản phẩm
+            $query = "UPDATE `taikhoan` SET `hoTen` = '$user_hoten', `Sdt` = '$user_sdt', `diaChi` = '$user_adress', `gioiTinh` = '$user_gender', `email` = '$user_email' WHERE `taikhoan`.`id_tk` = '$user_id';";
+
+            if (mysqli_query($this->connection, $query)) {
+                echo '<script>
+                    alert("Chỉnh sửa tài khoản thành công");
+                    window.location.href = "hoso.php";
+                </script>';
+            } else {
+                echo "Cập nhật thất bại!";
+            }
+        }
+    }
     function delete_admin($admin_id)
     {
         $sel_query = "DELETE FROM `taikhoan` WHERE `id_tk`=$admin_id";
@@ -490,6 +488,15 @@ class  adminback
     function show_xin_nghiphep()
     {
         $query = "SELECT * FROM `nghiphep` WHERE `trangthai`='DangXuLy'";
+
+        if (mysqli_query($this->connection, $query)) {
+            $nghiphep_info = mysqli_query($this->connection, $query);
+            return $nghiphep_info;
+        }
+    }
+    function show_xin_nghiphep_byid($id)
+    {
+        $query = "SELECT * FROM `nghiphep` WHERE `id_np`='$id'";
 
         if (mysqli_query($this->connection, $query)) {
             $nghiphep_info = mysqli_query($this->connection, $query);
@@ -1073,12 +1080,114 @@ class  adminback
             </script>';
         }
     }
+    
+    function update_donxinnghi($data)
+    {
+        $id_np= $data['id_np'];
+        $nhanVien = $data['nhanVien'];
+        $lyDo = $data['lyDo'];
+        $tuNgay = $data['tuNgay'];
+        $denNgay = $data['denNgay'];
+        
 
 
+        // Kiểm tra xem có tập tin hình ảnh nào được tải lên không
+        if (!empty($_FILES['hinhanh']['tmp_name'])) {
+            $hinhanh_name = $_FILES['hinhanh']['name'];
+            $hinhanh_size = $_FILES['hinhanh']['size'];
+            $hinhanh_tmp = $_FILES['hinhanh']['tmp_name'];
+            $img_ext = pathinfo($hinhanh_name, PATHINFO_EXTENSION);
+            list($width, $height) = getimagesize($hinhanh_tmp);
+
+            if ($img_ext == "jpg" || $img_ext == 'jpeg' || $img_ext == "png") {
+                if ($hinhanh_size <= 2e+6 && $width < 2701 && $height < 2701) {
+                    $select_query = "SELECT * FROM `nghiphep` WHERE id_np=$id_np";
+                    $result = mysqli_query($this->connection, $select_query);
+                    $row = mysqli_fetch_assoc($result);
+                    $pre_img = $row['hinhanh'];
+                    unlink("uploads/nghiphep/" . $pre_img);
+
+                    $query = "UPDATE `nghiphep` SET `nhanVien` = '$nhanVien', `lyDo` = '$lyDo', `hinhanh` = '$hinhanh_name', `tuNgay` = '$tuNgay', `denNgay` = '$denNgay' where id_np= $id_np;";
+
+                    if (mysqli_query($this->connection, $query) && move_uploaded_file($hinhanh_tmp, "uploads/avatar/" . $hinhanh_name)) {
+                        echo '<script>
+                            alert("Chỉnh sửa tài khoản thành công");
+                            window.location.href = "nghiphep_history.php";
+                        </script>';
+                    } else {
+                        echo "Upload failed!";
+                    }
+                } else {
+                    $msg = "Sorry !! Pdt image max height: 2701 px and width: 2701 px, but you are trying {$width} px and {$height} px";
+                    return $msg;
+                }
+            } else {
+                $msg = "File should be jpg or png format";
+                return $msg;
+            }
+        } else {
+            // Nếu không có tập tin hình ảnh mới được tải lên, giữ nguyên ảnh cũ và chỉ cập nhật thông tin khác của sản phẩm
+            $query = "UPDATE `nghiphep` SET `nhanVien` = '$nhanVien', `lyDo` = '$lyDo', `tuNgay` = '$tuNgay', `denNgay` = '$denNgay' where id_np= $id_np;";
+
+            if (mysqli_query($this->connection, $query)) {
+                echo '<script>
+                    alert("Chỉnh sửa tài khoản thành công");
+                    window.location.href = "nghiphep_history.php";
+                </script>';
+            } else {
+                echo "Cập nhật thất bại!";
+            }
+        }
+    }
+
+    function delete_xinnghiphep($id)
+    {
+        $sel_query = "DELETE FROM `nghiphep` WHERE `id_np`=$id";
+        // $query = mysqli_query($this->connection, $sel_query);
+        // $fetch = mysqli_fetch_assoc($query);
+        // $img_name = $fetch['hinhdaidien'];
 
 
+        if (mysqli_query($this->connection, $sel_query)) {
+            // unlink('uploads/avatar/' . $img_name);
+            echo '<script>
+            alert("Xóa tài khoản thành công");
+            window.location.href = "nghiphep_history.php";
+            </script>';
+        }
+    }
+    public function updatePassword($id_tk, $oldPass, $newPass)
+    {
+  
+        $id_tk = mysqli_real_escape_string($this->connection, $id_tk);
+        $oldPass = mysqli_real_escape_string($this->connection, $oldPass);
+        $newPass = mysqli_real_escape_string($this->connection, $newPass);
+    
+        $sqlCheck = "SELECT * FROM `taikhoan` WHERE `id_tk` = '$id_tk' AND matKhau = MD5('$oldPass')";
+        $result = mysqli_query($this->connection, $sqlCheck);
+    
+        if (mysqli_num_rows($result) > 0) {
+            $sqlUpdate = "UPDATE `taikhoan` SET `matKhau` = MD5('$newPass') WHERE `id_tk` = '$id_tk'";
+            if (mysqli_query($this->connection, $sqlUpdate)) {
+                return "Mật khẩu đã được thay đổi thành công!";
+            } else {
+                return "Đã xảy ra lỗi khi cập nhật mật khẩu!";
+            }
+        } else {
+            return "Mật khẩu cũ không đúng!";
+        }
+    }
+    
+    
+    function search_nhanvien($keyword)
+    {
+        $query = "SELECT * FROM `taikhoan` WHERE `hoTen` LIKE '%$keyword%' or `id_tk` LIKE '%$keyword%'";
 
-
+        if (mysqli_query($this->connection, $query)) {
+            $search_query = mysqli_query($this->connection, $query);
+            return $search_query;
+        }
+    }
 
 
 

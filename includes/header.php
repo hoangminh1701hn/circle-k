@@ -151,7 +151,9 @@
               <li class="nav-item"><a class="nav-link" href="nghiphep_manage.php">Quản lý nghỉ phép</a></li>
               <?php } ?>
               <li class="nav-item"><a class="nav-link" href="nghiphep_history.php">Lịch sử nghỉ phép</a></li>
+              <?php if ($admin_role == 'NhanVien') { ?>
               <li class="nav-item"><a class="nav-link" href="nghiphep_add.php">Xin nghỉ phép</a></li>
+              <?php } ?>
             </ul>
           </div>
         </li>
@@ -311,7 +313,18 @@
                 aria-labelledby="profileDropdown">
                 <h6 class="p-3 mb-0">Profile</h6>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
+                <a href="hoso.php" class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-dark rounded-circle">
+                      <i class="mdi mdi-account-circle text-primary"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <p class="preview-subject mb-1">Hồ sơ</p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="doimatkhau.php" class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
                     <div class="preview-icon bg-dark rounded-circle">
                       <i class="mdi mdi-settings text-success"></i>

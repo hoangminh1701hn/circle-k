@@ -5,6 +5,14 @@ $user_array = array();
 while ($user = mysqli_fetch_assoc($user_info)) {
     $user_array[] = $user;
 }
+
+
+if (isset($_GET['status'])) {
+    $id = $_GET['id'];
+    if ($_GET['status'] == 'Delete') {
+        $obj->delete_xinnghiphep($id);
+    }
+}
 ?>
 <div class="col-lg-12 stretch-card">
     <div class="card">
@@ -22,6 +30,9 @@ while ($user = mysqli_fetch_assoc($user_info)) {
                             <th> Đến ngày </th>
                             <th>Ngày xin nghỉ</th>
                             <th>Trạng thái</th>
+                            <?php if ($admin_role == 'NhanVien') { ?>
+                            <th>Thao tác</th>
+                                <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,8 +70,22 @@ while ($user = mysqli_fetch_assoc($user_info)) {
                                 } elseif ($np['trangThai'] == 'TuChoi') {
                                     echo '<div class="badge badge-danger">Đã từ chối</div>';
                                 } ?> </td>
+                                <?php if($np['trangThai']=='DangXuLy' && $admin_role == 'NhanVien'){  ?>
+                            
+                                <td>
+                                    <a href="nghiphep_edit.php?status=Edit&id=<?php echo $np['id_np']; ?>"
+                                        class="badge badge-success">Sửa</a>
+                                    <a href="?status=Delete&id=<?php echo $np['id_np']; ?>" class="badge badge-danger">Xóa</a>
+                                </td>
+                               
+                            <?php }elseif($admin_role == 'NhanVien'){?>
+                               
+                                <td></td>
+                                <?php } ?>
+                               
                             </tr>
                             <?php
+                            
                             $dem++;
                         }
                         ?>
