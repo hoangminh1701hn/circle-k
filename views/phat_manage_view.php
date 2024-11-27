@@ -1,6 +1,6 @@
 <?php
 
-$showds = $obj->show_dsphat($admin_role, $admin_id);
+
 $phat_info = $obj->show_phat();
 $user_info = $obj->show_admin_user();
 
@@ -19,12 +19,38 @@ while ($user = mysqli_fetch_assoc($user_info)) {
     $user_array[] = $user;
 }
 
+
+
+if (isset($_GET['search'])) {
+    $keyword = $_GET['keyword'];
+    if (!empty($keyword)) {
+      $phat_info = $obj->search_phat($keyword,$admin_role, $admin_id);
+  
+  
+  
+      $phat_datas = array();
+      while ($phat_ftecth = mysqli_fetch_assoc($phat_info)) {
+        $phat_datas[] = $phat_ftecth;
+      }
+      $search_item = count($phat_datas);
+    } else {
+      header('location:phat_manage.php');
+    }
+  } else {
+    $phat_info = $obj->show_dsphat($admin_role, $admin_id);
+  
+    $phat_datas = array();
+  
+    while ($phat_ftecth = mysqli_fetch_assoc($phat_info)) {
+      $phat_datas[] = $phat_ftecth;
+    }
+  }
 ?>
 <div class="col-lg-12 stretch-card">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Quản lý danh sách tiền phạt</h4>
-            </p>
+            <?php include("includes/search_bar.php"); ?>
             <div class="table-responsive">
                 <table class="table table-bordered table-contextual">
                     <thead>
@@ -40,8 +66,9 @@ while ($user = mysqli_fetch_assoc($user_info)) {
                     </thead>
                     <tbody>
                         <?php
+                         if (count($phat_datas) > 0) {
                         $dem = 1;
-                        while ($ds = mysqli_fetch_assoc($showds)) {
+                        foreach ($phat_datas as $ds) {
                             ?>
                             <tr class="table-info">
                                 <td> <?php echo $dem; ?> </td>
@@ -71,7 +98,9 @@ while ($user = mysqli_fetch_assoc($user_info)) {
                             <?php
                             $dem++;
                         }
-
+                    } else {
+                        echo "<tr><td colspan='9' class='text-center'>Không có dữ liệu để hiển thị</td></tr>";
+                      }
                         ?>
                     </tbody>
                 </table>

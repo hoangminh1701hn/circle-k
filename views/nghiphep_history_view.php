@@ -1,5 +1,5 @@
 <?php
-$show_nghiphep = $obj->show_lichsu_nghiphep($admin_role, $admin_id);
+
 $user_info = $obj->show_admin_user();
 $user_array = array();
 while ($user = mysqli_fetch_assoc($user_info)) {
@@ -13,11 +13,38 @@ if (isset($_GET['status'])) {
         $obj->delete_xinnghiphep($id);
     }
 }
+
+
+if (isset($_GET['search'])) {
+    $keyword = $_GET['keyword'];
+    if (!empty($keyword)) {
+      $nghiphep_info = $obj->search_lichsunghiphep($keyword, $admin_role, $admin_id);
+  
+  
+  
+      $nghiphep_datas = array();
+      while ($nghiphep_ftecth = mysqli_fetch_assoc($nghiphep_info)) {
+        $nghiphep_datas[] = $nghiphep_ftecth;
+      }
+      $search_item = count($nghiphep_datas);
+    } else {
+      header('location:nghiphep_history.php');
+    }
+  } else {
+    $nghiphep_info = $obj->show_lichsu_nghiphep($admin_role, $admin_id);
+  
+    $nghiphep_datas = array();
+  
+    while ($nghiphep_ftecth = mysqli_fetch_assoc($nghiphep_info)) {
+      $nghiphep_datas[] = $nghiphep_ftecth;
+    }
+  }
 ?>
 <div class="col-lg-12 stretch-card">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Lịch sử nghỉ phép</h4>
+            <?php include("includes/search_bar.php"); ?>
             <div class="table-responsive">
                 <table class="table table-bordered table-contextual">
                     <thead>
@@ -37,8 +64,9 @@ if (isset($_GET['status'])) {
                     </thead>
                     <tbody>
                         <?php
+                         if (count($nghiphep_datas) > 0) {
                         $dem = 1;
-                        while ($np = mysqli_fetch_assoc($show_nghiphep)) {
+                        foreach ($nghiphep_datas as $np){
                             ?>
                             <tr class="table-info">
                                 <td> <?php echo $dem; ?> </td>
@@ -88,6 +116,9 @@ if (isset($_GET['status'])) {
                             
                             $dem++;
                         }
+                    } else {
+                        echo "<tr><td colspan='9' class='text-center'>Không có dữ liệu để hiển thị</td></tr>";
+                      }
                         ?>
                     </tbody>
                 </table>

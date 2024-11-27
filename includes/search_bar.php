@@ -8,6 +8,12 @@
             echo '<form action="luong_manage.php" class="form-search" name="desktop-seacrh" method="get">';
         } if ($tranghientai === 'thuong_manage.php') {
             echo '<form action="thuong_manage.php" class="form-search" name="desktop-seacrh" method="get">';
+        } if ($tranghientai === 'nghiphep_manage.php') {
+            echo '<form action="nghiphep_manage.php" class="form-search" name="desktop-seacrh" method="get">';
+        } if ($tranghientai === 'phat_manage.php') {
+            echo '<form action="phat_manage.php" class="form-search" name="desktop-seacrh" method="get">';
+        } if ($tranghientai === 'nghiphep_history.php') {
+            echo '<form action="nghiphep_history.php" class="form-search" name="desktop-seacrh" method="get">';
         } 
     ?>
         <input type="text" name="keyword" class="input-text"  placeholder="Nhập nội dung cần tìm...">

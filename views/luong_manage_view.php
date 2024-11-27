@@ -17,11 +17,37 @@ while ($user = mysqli_fetch_assoc($user_info)) {
     $user_array[] = $user;
 }
 
+if (isset($_GET['search'])) {
+    $keyword = $_GET['keyword'];
+    if (!empty($keyword)) {
+      $luong_info = $obj->search_luong($keyword,$admin_role, $admin_id);
+  
+  
+  
+      $luong_datas = array();
+      while ($luong_ftecth = mysqli_fetch_assoc($luong_info)) {
+        $luong_datas[] = $luong_ftecth;
+      }
+      $search_item = count($luong_datas);
+    } else {
+      header('location:luong_manage.php');
+    }
+  } else {
+    $luong_info = $obj->show_luong($admin_role, $admin_id);
+  
+    $luong_datas = array();
+  
+    while ($luong_ftecth = mysqli_fetch_assoc($luong_info)) {
+      $luong_datas[] = $luong_ftecth;
+    }
+  }
+  
 ?>
 <div class="col-12 grid-margin">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Quản lý lương</h4>
+            <?php include("includes/search_bar.php"); ?>
             <div class="table-responsive">
                 <table class="table" style="color: white;">
                     <thead>
@@ -42,7 +68,8 @@ while ($user = mysqli_fetch_assoc($user_info)) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while ($luong = mysqli_fetch_assoc($showluong)) { ?>
+                    <?php      if (count($luong_datas) > 0) {
+                        foreach ($luong_datas as $luong) { ?>
                             <tr>
                                 <td>
                                     <?php echo $dem ?>
@@ -81,6 +108,9 @@ while ($user = mysqli_fetch_assoc($user_info)) {
                             <?php
                             $dem++;
                         }
+                    } else {
+                        echo "<tr><td colspan='9' class='text-center'>Không có dữ liệu để hiển thị</td></tr>";
+                      }
                         ?>
                     </tbody>
 

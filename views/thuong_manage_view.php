@@ -1,6 +1,6 @@
 <?php
 
-$showds = $obj->show_dsthuong ($admin_role,$admin_id);
+
 $thuong_info = $obj->show_thuong();
 $user_info = $obj->show_admin_user();
 
@@ -21,12 +21,36 @@ while ($user = mysqli_fetch_assoc($user_info)) {
     $user_array[] = $user;
 }
 
+if (isset($_GET['search'])) {
+    $keyword = $_GET['keyword'];
+    if (!empty($keyword)) {
+      $thuong_info = $obj->search_thuong($keyword,$admin_role,$admin_id);
+  
+  
+  
+      $thuong_datas = array();
+      while ($thuong_ftecth = mysqli_fetch_assoc($thuong_info)) {
+        $thuong_datas[] = $thuong_ftecth;
+      }
+      $search_item = count($thuong_datas);
+    } else {
+      header('location:thuong_manage.php');
+    }
+  } else {
+    $thuong_info = $obj->show_dsthuong($admin_role,$admin_id);
+  
+    $thuong_datas = array();
+  
+    while ($thuong_ftecth = mysqli_fetch_assoc($thuong_info)) {
+      $thuong_datas[] = $thuong_ftecth;
+    }
+  }
 ?>
 <div class="col-lg-12 stretch-card">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Quản lý danh sách tiền thưởng</h4>
-            </p>
+            <?php include("includes/search_bar.php"); ?>
             <div class="table-responsive">
                 <table class="table table-bordered table-contextual">
                     <thead>
@@ -42,8 +66,11 @@ while ($user = mysqli_fetch_assoc($user_info)) {
                     </thead>
                     <tbody>
                         <?php
+                        if (count($thuong_datas) > 0) {
                         $dem = 1;
-                        while ($ds = mysqli_fetch_assoc($showds)) {
+                        foreach ($thuong_datas as $ds)
+                            # code...
+                        {
                             ?>
                             <tr class="table-info">
                                 <td> <?php echo $dem; ?> </td>
@@ -75,7 +102,9 @@ while ($user = mysqli_fetch_assoc($user_info)) {
                             <?php
                             $dem++;
                         }
-
+                    } else {
+                        echo "<tr><td colspan='9' class='text-center'>Không có dữ liệu để hiển thị</td></tr>";
+                      }
                         ?>
                     </tbody>
                 </table>

@@ -1188,11 +1188,151 @@ class  adminback
             return $search_query;
         }
     }
+    function search_nghiphep($keyword)
+    {
+        $query = " SELECT nghiphep.*, taikhoan.* 
+        FROM nghiphep 
+        LEFT JOIN taikhoan 
+        ON nghiphep.nhanVien = taikhoan.id_tk 
+        WHERE (nghiphep.nhanVien LIKE '%$keyword%' 
+               OR nghiphep.id_np LIKE '%$keyword%' 
+               OR taikhoan.hoTen LIKE '%$keyword%') 
+          AND nghiphep.trangthai = 'DangXuLy'";
 
+        if (mysqli_query($this->connection, $query)) {
+            $search_query = mysqli_query($this->connection, $query);
+            return $search_query;
+        }
+    }
+    function search_luong($keyword, $admin_role, $admin_id)
+    {
+        if ($admin_role == 'NhanVien') {
+            $query = "
+                SELECT luong.*, taikhoan.* 
+                FROM luong 
+                LEFT JOIN taikhoan 
+                ON luong.taikhoan = taikhoan.id_tk 
+                WHERE (luong.taikhoan LIKE '%$keyword%' 
+                       OR luong.id_luong LIKE '%$keyword%' 
+                       OR luong.ngayThanhToan LIKE '%$keyword%')
+                  AND luong.taikhoan = '$admin_id'";
+        } else {
+            $query = "
+                SELECT luong.*, taikhoan.* 
+                FROM luong 
+                LEFT JOIN taikhoan 
+                ON luong.taikhoan = taikhoan.id_tk 
+                WHERE luong.taikhoan LIKE '%$keyword%' 
+                       OR luong.id_luong LIKE '%$keyword%' 
+                       OR taikhoan.hoTen LIKE '%$keyword%'";
+        }
+    
+        if (mysqli_query($this->connection, $query)) {
+            $search_query = mysqli_query($this->connection, $query);
+            return $search_query;
+        }
+    }
+    
+    function search_thuong($keyword, $admin_role, $admin_id)
+    {
+        if ($admin_role == 'NhanVien') {
+            $query = "
+                SELECT danhsachthuong.*, taikhoan.*, thuong.* 
+                FROM thuong
+                LEFT JOIN danhsachthuong 
+                ON danhsachthuong.thuong = thuong.id_thuong
+                LEFT JOIN taikhoan 
+                ON danhsachthuong.nhanVien = taikhoan.id_tk  
+                WHERE (danhsachthuong.nhanVien LIKE '%$keyword%'  
+                       OR thuong.id_thuong LIKE '%$keyword%' 
+                       OR thuong.loaiThuong LIKE '%$keyword%')
+                  AND danhsachthuong.nhanVien = '$admin_id'";
+        } else {
+            $query = "
+                SELECT danhsachthuong.*, taikhoan.*, thuong.* 
+                FROM thuong
+                LEFT JOIN danhsachthuong
+                ON danhsachthuong.thuong = thuong.id_thuong
+                LEFT JOIN taikhoan 
+                ON danhsachthuong.nhanVien = taikhoan.id_tk 
+                WHERE (danhsachthuong.nhanVien LIKE '%$keyword%' 
+                       OR thuong.id_thuong LIKE '%$keyword%' 
+                       OR taikhoan.hoTen LIKE '%$keyword%' 
+                       OR thuong.loaiThuong LIKE '%$keyword%')";
+        }
+    
+        if (mysqli_query($this->connection, $query)) {
+            $search_query = mysqli_query($this->connection, $query);
+            return $search_query;
+        }
+    }
+    
+    function search_phat($keyword, $admin_role, $admin_id)
+    {
+        if ($admin_role == 'NhanVien') {
+            $query = "
+                SELECT danhsachphat.*, taikhoan.*, phat.* 
+                FROM phat
+                LEFT JOIN danhsachphat 
+                ON danhsachphat.phat = phat.id_phat
+                LEFT JOIN taikhoan 
+                ON danhsachphat.nhanVien = taikhoan.id_tk  
+                WHERE (danhsachphat.nhanVien LIKE '%$keyword%'  
+                       OR phat.id_phat LIKE '%$keyword%' 
+                       OR phat.loaiPhat LIKE '%$keyword%')
+                  AND danhsachphat.nhanVien = '$admin_id'";
+        } else {
+            $query = "
+                SELECT danhsachphat.*, taikhoan.*, phat.* 
+                FROM phat
+                LEFT JOIN danhsachphat
+                ON danhsachphat.phat = phat.id_phat
+                LEFT JOIN taikhoan 
+                ON danhsachphat.nhanVien = taikhoan.id_tk 
+                WHERE (danhsachphat.nhanVien LIKE '%$keyword%' 
+                       OR phat.id_phat LIKE '%$keyword%' 
+                       OR taikhoan.hoTen LIKE '%$keyword%' 
+                       OR phat.loaiPhat LIKE '%$keyword%')";
+        }
+    
+        if (mysqli_query($this->connection, $query)) {
+            $search_query = mysqli_query($this->connection, $query);
+            return $search_query;
+        }
+    }
 
-
-
-
+    function search_lichsunghiphep($keyword, $admin_role, $admin_id)
+    {
+        if ($admin_role == 'NhanVien') {
+            $query = "
+                SELECT nghiphep.*, taikhoan.* 
+                FROM nghiphep 
+                LEFT JOIN taikhoan 
+                ON nghiphep.nhanVien = taikhoan.id_tk 
+                WHERE (nghiphep.ngayXinPhep LIKE '%$keyword%' 
+                       OR nghiphep.lyDo LIKE '%$keyword%' 
+                       OR nghiphep.tuNgay LIKE '%$keyword%'
+                       OR nghiphep.denNgay LIKE '%$keyword%') 
+                  AND nghiphep.nhanVien = '$admin_id'";
+        } else {
+            $query = "
+                SELECT nghiphep.*, taikhoan.* 
+                FROM nghiphep 
+                LEFT JOIN taikhoan 
+                ON nghiphep.nhanVien = taikhoan.id_tk 
+                WHERE (nghiphep.lyDo LIKE '%$keyword%' 
+                       OR nghiphep.tuNgay LIKE '%$keyword%' 
+                       OR nghiphep.denNgay LIKE '%$keyword%' 
+                       OR taikhoan.hoTen LIKE '%$keyword%') 
+                ";
+        }
+    
+        if (mysqli_query($this->connection, $query)) {
+            $search_query = mysqli_query($this->connection, $query);
+            return $search_query;
+        }
+    }
+    
 
 
 
