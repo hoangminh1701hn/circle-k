@@ -8,7 +8,7 @@ if (isset($_GET['status'])) {
     } 
 }
 // Lấy thông tin danh sách bảo hiểm từ hàm đã sửa
-$insurance_list = $obj->get_all_insurance(); 
+$insurance_list = $obj->get_all_insurance($admin_role,$admin_id); 
 
 // Kiểm tra nếu có dữ liệu
 if (!$insurance_list) {
@@ -31,7 +31,9 @@ if (!$insurance_list) {
                             <th> Ngày kết thúc </th>
                             <th> Số tiền bảo hiểm </th>
                             <th> Ghi chú </th>
+                            <?php if ($admin_role == 'CuaHangTruong') { ?>
                             <th> Action </th>
+                            <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,10 +49,12 @@ if (!$insurance_list) {
                                 <td> <?php echo $insurance['end_date']; ?> </td>
                                 <td> <?php echo number_format($insurance['coverage_amount'], 2); ?> </td>
                                 <td> <?php echo $insurance['notes']; ?> </td>
+                                <?php if ($admin_role == 'CuaHangTruong') { ?>
                                 <td>
                                     <a href="edit_insurance.php?status=edit&&id=<?php echo $insurance['id']; ?>" class="btn btn-sm btn-warning">Sửa</a>
                                     <a href="javascript:void(0);" class="btn btn-sm btn-danger" onclick="confirmDelete(<?php echo $insurance['id']; ?>)">Xóa</a>
                                 </td>
+                                <?php } ?>
                             </tr>
                             <?php
                             

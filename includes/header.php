@@ -101,8 +101,8 @@
             <span class="menu-title">Bảng điều hướng</span>
           </a>
         </li>
-        <?php if ($admin_role == 'CuaHangTruong') { ?>
-        <li class="nav-item menu-items">
+       
+          <li class="nav-item menu-items">
           <a class="nav-link" data-toggle="collapse" href="#chamcong" aria-expanded="false" aria-controls="chamcong">
             <span class="menu-icon">
               <i class="mdi mdi-tag-faces"></i>
@@ -112,13 +112,15 @@
           </a>
           <div class="collapse" id="chamcong">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="chamcong.php">Chấm công</a></li>
-              <li class="nav-item"> <a class="nav-link" href="dangkykhuonmat.php">Đăng ký khuôn mặt</a></li>
-              <li class="nav-item"> <a class="nav-link" href="chamcong_manage.php">Quản lý chấm công</a></li>
+              <li class="nav-item"> <a class="nav-link" href="http://127.0.0.1:5000">Chấm công và khuôn mặt</a></li>
+              <?php if ($admin_role == 'CuaHangTruong') { ?>
+              <li class="nav-item"> <a class="nav-link" href="manage_regulations.php">Quản lý lịch làm việc</a></li>
+              <?php } ?>
+              <li class="nav-item"> <a class="nav-link" href="attendance_history.php">Lịch Sử chấm công</a></li>
             </ul>
           </div>
         </li>
-        <?php } ?>
+       
         <?php if ($admin_role == 'CuaHangTruong') { ?>
         <li class="nav-item menu-items">
           <a class="nav-link" data-toggle="collapse" href="#nhanvien" aria-expanded="false" aria-controls="nhanvien">
@@ -220,6 +222,7 @@
             </ul>
           </div>
         </li>
+        <?php } ?>
         <li class="nav-item menu-items">
           <a class="nav-link" data-toggle="collapse" href="#baohiem" aria-expanded="false" aria-controls="baohiem">
             <span class="menu-icon">
@@ -231,6 +234,7 @@
           <div class="collapse" id="baohiem">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="insurance_manage.php">Quản lý bảo hiểm</a></li>
+              <?php if ($admin_role == 'CuaHangTruong') { ?>
               <li class="nav-item"> <a class="nav-link" href="add_insurance.php">Thêm bảo hiểm</a></li>
             </ul>
           </div>

@@ -94,6 +94,8 @@
                                             include("views/hoso_view.php");
                                         }elseif ($views== "hoso_edit") {
                                             include("views/hoso_edit_view.php");
+                                        }elseif ($views== "attendance_history") {
+                                            include("views/attendance_history_view.php");
                                         }
                                         else{
                                             echo '<script>

@@ -949,7 +949,7 @@ class  adminback
             return "Error: " . mysqli_error($this->connection);
         }
     }
-    function get_all_insurance() {
+    function get_all_insurance($admin_role, $admin_id) {
         $query = "
             SELECT 
                 insurance.id, 
@@ -966,6 +966,10 @@ class  adminback
                 taikhoan ON insurance.taikhoan = taikhoan.id_tk
         ";
     
+        if ($admin_role === 'NhanVien') {
+            $query .= " WHERE insurance.taikhoan = " . intval($admin_id);
+        }
+    
         $result = mysqli_query($this->connection, $query);
     
         if (!$result) {
@@ -974,6 +978,7 @@ class  adminback
     
         return $result;
     }
+    
 
     public function update_insurance($data) {
         $id_insurance = $data['id_insurance'];
